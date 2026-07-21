@@ -1,0 +1,6 @@
+# parameter.yml — remplacements par environnement pour fabric-cicd (find/replace des GUID entre DEV et PROD).
+find_replace:
+  - find_value: "REMPLACER_PAR_GUID_WORKSPACE_DEV"
+    replace_value:
+      PROD: "REMPLACER_PAR_GUID_WORKSPACE_PROD"
+  # Ajoute d'autres paires (connexions, IDs de Lakehouse/Eventhouse) au besoin.

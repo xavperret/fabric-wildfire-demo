@@ -1,0 +1,6 @@
+{
+  "firms": { "map_key": "REMPLACER", "bbox": "-5.0,41.0,10.0,51.5", "source": "VIIRS_NOAA20_NRT", "day_range": 1 },
+  "opensky": { "client_id": "", "client_secret": "", "bbox": {"lamin":41.0,"lomin":-5.0,"lamax":51.5,"lomax":10.0} },
+  "azure_maps": { "subscription_key": "REMPLACER" },
+  "fabric": { "workspace": "Wildfire-Demo", "lakehouse": "LH_Wildfire", "eventhouse": "EH_Wildfire" }
+}

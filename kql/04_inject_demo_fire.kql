@@ -1,0 +1,5 @@
+// 04 — Injection d'un foyer de démo (moment fort).
+// Exécute dans un KQL Queryset de EH_Wildfire pour déclencher priorité -> Activator -> alerte Teams.
+.ingest inline into table FireDetections <|
+DEMO-BORMES-001,43.150,6.340,92.5,h,2026-07-21,1200,D,DEMO_INJECTION,2026-07-21T12:00:00Z
+// Remplace la date/heure par l'heure du jour si besoin. Ce foyer près de Bormes-les-Mimosas (dense) force priority_score haut.

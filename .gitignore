@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Secrets & local config
+.env
+config/parameters.json
+
+# Keep the committed template:
+!config/parameters.example.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

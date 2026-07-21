@@ -1,0 +1,40 @@
+// 02 — Logique de dispatch (clustering, priorisation par densité, choix du moyen)
+// Seuils = valeurs de démo, à ajuster.
+
+// (a) Regrouper les détections en foyers via cellules S2 (~niveau 12)
+let FireZones =
+    FireDetections
+    | where ingest_ts > ago(6h)
+    | extend cell = geo_point_to_s2cell(longitude, latitude, 12)
+    | summarize frp_total = sum(frp), lat = avg(latitude), lon = avg(longitude),
+                detections = count(), last_seen = max(ingest_ts) by cell;
+
+// (b) Population menacée dans un rayon de 5 km (jointure croisée + distance géodésique)
+let ZonesWithPop =
+    FireZones
+    | extend k = 1
+    | join kind=inner (ref_communes | extend k = 1) on k
+    | extend dist_m = geo_distance_2points(lon, lat, todouble(lon1), todouble(lat1))
+    | where dist_m <= 5000
+    | summarize pop_5km = sum(population), lat = any(lat), lon = any(lon),
+                frp_total = any(frp_total) by cell;
+
+// (c) Score de priorité + recommandation (aérien vs sol)
+ZonesWithPop
+| extend priority_score = round(frp_total * 1.0 + pop_5km / 100.0, 1)
+| extend recommendation = case(
+      frp_total > 50 and pop_5km < 500,  "AÉRIEN (Canadair) — foyer intense, faible densité",
+      pop_5km >= 500,                     "SOL (SDIS) + AÉRIEN — enjeu habitations",
+                                          "SOL (SDIS)")
+| order by priority_score desc
+
+// (d) Unité SDIS disponible la plus proche de chaque foyer
+FireDetections
+| where ingest_ts > ago(6h)
+| extend cell = geo_point_to_s2cell(longitude, latitude, 12)
+| summarize lat = avg(latitude), lon = avg(longitude) by cell
+| extend k = 1
+| join kind=inner (FirefighterUnits | where status == "available" | extend k = 1) on k
+| extend dist_km = round(geo_distance_2points(lon, lat, cur_lon, cur_lat) / 1000.0, 1)
+| summarize (dist_km, unit_id, unit_type) = arg_min(dist_km, unit_id, unit_type) by cell, lat, lon
+| order by dist_km asc

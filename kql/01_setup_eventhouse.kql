@@ -1,0 +1,14 @@
+// 01 — Setup Eventhouse (KQL Database) pour la démo Wildfire
+.create table FireDetections (detection_id:string, latitude:real, longitude:real, frp:real, confidence:string, acq_date:string, acq_time:string, daynight:string, source:string, ingest_ts:datetime)
+.create table AircraftPositions (icao24:string, callsign:string, aircraft_role:string, latitude:real, longitude:real, on_ground:bool, is_firefighting:bool, ingest_ts:datetime)
+.create table FirefighterUnits (unit_id:string, dept:string, unit_type:string, cur_lat:real, cur_lon:real, status:string, ingest_ts:datetime)
+// Exemple de mapping d'ingestion CSV (FIRMS)
+.create table FireDetections ingestion csv mapping "firms_csv"
+'['
+'  {"column":"latitude","Ordinal":0},{"column":"longitude","Ordinal":1},{"column":"frp","Ordinal":12}'
+']'
+
+// Note: les tables de référence (ref_communes, ref_critical_infra) vivent dans le Lakehouse.
+// Deux options pour les joindre côté Eventhouse:
+//   - créer un shortcut OneLake vers ces tables Delta dans l'Eventhouse, ou
+//   - les interroger en cross-database / cross-service depuis les requêtes KQL.

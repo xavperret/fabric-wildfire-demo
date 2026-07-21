@@ -1,0 +1,172 @@
+{
+  "type": "FeatureCollection",
+  "name": "fabric_wildfire_sample_snapshot",
+  "note": "Demo snapshot for the companion Leaflet map. Coordinates are [lon, lat] per the GeoJSON spec. Fires are around Bormes-les-Mimosas / Hyeres / La Londe (Var). Firefighter/SDIS units are SIMULATED and labeled. Not operational data.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 85.4,
+        "commune": "Bormes-les-Mimosas",
+        "detected_utc": "2026-07-21T11:42:00Z",
+        "sensor": "VIIRS",
+        "priority_score": 92,
+        "reco": "PELICAN 32 + SDIS 83 (foyer chaud proche habitations)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.3419, 43.1512]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 41.7,
+        "commune": "La Londe-les-Maures",
+        "detected_utc": "2026-07-21T11:38:00Z",
+        "sensor": "MODIS",
+        "priority_score": 63,
+        "reco": "SDIS 83 (attaque au sol, proche zone bâtie)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.2337, 43.1389]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 28.9,
+        "commune": "Hyeres",
+        "detected_utc": "2026-07-21T11:40:00Z",
+        "sensor": "VIIRS",
+        "priority_score": 48,
+        "reco": "Surveillance (foyer isolé, faible densité)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.1286, 43.1205]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 15.2,
+        "commune": "Collobrieres",
+        "detected_utc": "2026-07-21T11:35:00Z",
+        "sensor": "MODIS",
+        "priority_score": 31,
+        "reco": "Surveillance (massif des Maures, éloigné)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.3078, 43.2389]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "aircraft",
+        "callsign": "PELICAN32",
+        "role": "Canadair CL-415",
+        "altitude_m": 760,
+        "status": "en route",
+        "assigned_to": "Bormes-les-Mimosas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.1550, 43.0620]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "aircraft",
+        "callsign": "MILAN73",
+        "role": "Dash-8 Q400MR",
+        "altitude_m": 1980,
+        "status": "patrouille",
+        "assigned_to": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.9210, 43.2450]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "aircraft",
+        "callsign": "DRAGON83",
+        "role": "Hélicoptère (EC145)",
+        "altitude_m": 430,
+        "status": "reconnaissance",
+        "assigned_to": "La Londe-les-Maures"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.2010, 43.1010]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "unit",
+        "unit_id": "SDIS83-CCF-201",
+        "status": "available",
+        "base": "Le Lavandou",
+        "type": "Camion Citerne Feux de Forêt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.3670, 43.1370]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "unit",
+        "unit_id": "SDIS83-CCF-207",
+        "status": "available",
+        "base": "Hyeres",
+        "type": "Camion Citerne Feux de Forêt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.1290, 43.0730]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "unit",
+        "unit_id": "SDIS83-GRIMP-11",
+        "status": "engaged",
+        "base": "La Londe-les-Maures",
+        "type": "Groupe d'intervention"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.2360, 43.1420]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "unit",
+        "unit_id": "SDIS13-CCF-304",
+        "status": "available",
+        "base": "Aubagne",
+        "type": "Camion Citerne Feux de Forêt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.5710, 43.2920]
+      }
+    }
+  ]
+}

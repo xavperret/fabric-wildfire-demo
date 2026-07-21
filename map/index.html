@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--
+  Fabric Wildfire Response - Companion Leaflet Map (demo)
+  ---------------------------------------------------------------------------
+  This is a TENANT-INDEPENDENT companion to the Fabric Real-Time Dashboard and
+  its Azure Maps tile. It needs no Fabric capacity, no API key and no build
+  step: open index.html in any browser and it reads sample_snapshot.geojson
+  from the same folder.
+
+  Its one job on stage is the "carte qui zoome sur le depart de feu" beat:
+  when the Activator alert fires, click "Simuler une alerte" and the map flies
+  to the hottest fire (highest FRP), opening a popup with the threatened
+  commune and the dispatch recommendation. In a wired-up environment you would
+  instead point the fetch() at a live KQL/query export, but the sample snapshot
+  keeps the demo self-contained and reliable.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fabric Wildfire Response — Live Map (demo)</title>
+
+  <!-- Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; font-family: "Segoe UI", Roboto, Arial, sans-serif; }
+    #map { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
+
+    .banner {
+      position: absolute; top: 12px; left: 12px; z-index: 1000;
+      background: rgba(20, 24, 33, 0.88); color: #fff;
+      padding: 10px 14px; border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      max-width: 340px;
+    }
+    .banner h1 { font-size: 15px; margin: 0 0 4px 0; font-weight: 600; }
+    .banner p  { font-size: 11px; margin: 0; color: #c9d1d9; }
+
+    .sim-btn {
+      margin-top: 10px; width: 100%;
+      background: #d9362b; color: #fff; border: none;
+      padding: 9px 12px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; font-weight: 600;
+    }
+    .sim-btn:hover { background: #b52a21; }
+
+    .legend {
+      position: absolute; bottom: 18px; left: 12px; z-index: 1000;
+      background: rgba(255,255,255,0.94); color: #222;
+      padding: 10px 12px; border-radius: 8px; font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .legend h2 { font-size: 12px; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: .04em; color: #555; }
+    .legend .row { display: flex; align-items: center; margin: 3px 0; }
+    .legend .dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; display: inline-block; }
+    .dot-fire  { background: #d9362b; }
+    .dot-air   { background: #2f6fed; }
+    .dot-unit  { background: #2f9e44; }
+    .dot-unit-eng { background: #868e96; }
+
+    .status-msg {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 1200; background: #fff3cd; color: #664d03;
+      border: 1px solid #ffe69c; padding: 14px 18px; border-radius: 8px;
+      font-size: 14px; max-width: 420px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .popup-reco { font-weight: 600; color: #b52a21; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="banner">
+    <h1>🔥 Fabric Wildfire Response — Live Map (demo)</h1>
+    <p>France, Sud-Est · compagnon de la Real-Time Dashboard (Azure Maps). Données d'exemple, non opérationnelles.</p>
+    <button id="simulate" class="sim-btn">🔥 Simuler une alerte</button>
+  </div>
+
+  <div id="legend" class="legend" style="display:none;">
+    <h2>Légende</h2>
+    <div class="row"><span class="dot dot-fire"></span>Feux (taille ∝ FRP)</div>
+    <div class="row"><span class="dot dot-air"></span>Aéronefs (callsign)</div>
+    <div class="row"><span class="dot dot-unit"></span>Unités SDIS — disponibles</div>
+    <div class="row"><span class="dot dot-unit-eng"></span>Unités SDIS — engagées</div>
+  </div>
+
+  <script>
+    // --- Base map, centered on Sud-Est France ---------------------------------
+    var map = L.map('map', { zoomControl: true }).setView([43.4, 5.8], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // State we need for the "simulate alert" beat.
+    var hottestFire = null;      // { latlng, marker, props }
+    var maxFrp = -Infinity;
+
+    function showMessage(text) {
+      var el = document.createElement('div');
+      el.className = 'status-msg';
+      el.innerHTML = text;
+      document.body.appendChild(el);
+    }
+
+    function firePopupHtml(p) {
+      var reco = p.reco ? '<div class="popup-reco">Reco : ' + p.reco + '</div>' : '';
+      return '<b>Feu — ' + (p.commune || 'commune inconnue') + '</b><br/>' +
+             'FRP : ' + (p.frp != null ? p.frp + ' MW' : 'n/d') + '<br/>' +
+             'Priorité : ' + (p.priority_score != null ? p.priority_score : 'n/d') + '<br/>' +
+             (p.sensor ? 'Capteur : ' + p.sensor + '<br/>' : '') +
+             reco;
+    }
+
+    // --- Load the snapshot and draw the three layers --------------------------
+    fetch('sample_snapshot.geojson')
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (geo) {
+        var features = (geo && geo.features) || [];
+        if (!features.length) {
+          showMessage('Aucune donnée dans le snapshot.');
+          return;
+        }
+
+        features.forEach(function (f) {
+          var p = f.properties || {};
+          var c = (f.geometry && f.geometry.coordinates) || null;
+          if (!c) return;
+          var latlng = [c[1], c[0]]; // GeoJSON is [lon, lat]
+
+          if (p.layer === 'fire') {
+            var radius = Math.max(6, Math.sqrt(p.frp || 1) * 2.2); // scale by FRP
+            var marker = L.circleMarker(latlng, {
+              radius: radius,
+              color: '#7a1a13',
+              weight: 1,
+              fillColor: '#d9362b',
+              fillOpacity: 0.65
+            }).addTo(map);
+            marker.bindPopup(firePopupHtml(p));
+
+            if ((p.frp || 0) > maxFrp) {
+              maxFrp = p.frp || 0;
+              hottestFire = { latlng: latlng, marker: marker, props: p };
+            }
+
+          } else if (p.layer === 'aircraft') {
+            var air = L.circleMarker(latlng, {
+              radius: 8,
+              color: '#1b3f8f',
+              weight: 1,
+              fillColor: '#2f6fed',
+              fillOpacity: 0.9
+            }).addTo(map);
+            air.bindTooltip(p.callsign || 'aéronef', { permanent: true, direction: 'right', className: 'ac-label' });
+            air.bindPopup('<b>' + (p.callsign || 'aéronef') + '</b><br/>' +
+                          (p.role || '') + '<br/>' +
+                          'Statut : ' + (p.status || 'n/d') +
+                          (p.assigned_to ? '<br/>Affecté : ' + p.assigned_to : ''));
+
+          } else if (p.layer === 'unit') {
+            var engaged = (p.status === 'engaged' || p.status === 'engagé' || p.status === 'engage');
+            var unit = L.circleMarker(latlng, {
+              radius: 7,
+              color: engaged ? '#4b5057' : '#1e6b2f',
+              weight: 1,
+              fillColor: engaged ? '#868e96' : '#2f9e44',
+              fillOpacity: 0.9
+            }).addTo(map);
+            unit.bindTooltip(p.unit_id || 'unité', { permanent: true, direction: 'right', className: 'unit-label' });
+            unit.bindPopup('<b>' + (p.unit_id || 'unité SDIS') + '</b><br/>' +
+                           (p.type || '') + '<br/>' +
+                           'Base : ' + (p.base || 'n/d') + '<br/>' +
+                           'Statut : ' + (p.status || 'n/d') +
+                           ' (SIMULÉ)');
+          }
+        });
+
+        document.getElementById('legend').style.display = 'block';
+      })
+      .catch(function (err) {
+        showMessage('Impossible de charger <code>sample_snapshot.geojson</code>.<br/>' +
+                    'Ouvrez la page via un petit serveur local (ex. <code>python -m http.server</code>) ' +
+                    'plutôt qu\'en <code>file://</code>.<br/><small>' + err + '</small>');
+      });
+
+    // --- "Simuler une alerte" : fly to the hottest fire -----------------------
+    document.getElementById('simulate').addEventListener('click', function () {
+      if (!hottestFire) {
+        showMessage('Pas encore de foyer chargé — attendez le chargement du snapshot.');
+        return;
+      }
+      map.flyTo(hottestFire.latlng, 12, { duration: 1.5 });
+      // Open the popup once the fly animation settles.
+      setTimeout(function () {
+        hottestFire.marker.openPopup();
+      }, 1600);
+    });
+  </script>
+</body>
+</html>
