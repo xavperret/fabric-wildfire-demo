@@ -5,7 +5,7 @@ Les items doivent exister sous forme de dossiers d'items dans le repo (peuplés 
 from azure.identity import AzureCliCredential
 from fabric_cicd import FabricWorkspace, publish_all_items, unpublish_all_orphan_items
 
-WORKSPACE_ID = "REMPLACER_PAR_GUID_WORKSPACE"
+WORKSPACE_ID = "96a844c1-e64e-491b-b536-d3846330d598"
 REPO_DIR = "."  # racine du repo fabric-wildfire-demo
 
 workspace = FabricWorkspace(
