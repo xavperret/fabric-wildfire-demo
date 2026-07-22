@@ -1,12 +1,13 @@
-"""deploy.py — Déploie/redéploie les items Fabric du repo vers un workspace via fabric-cicd.
-Prérequis: pip install fabric-cicd azure-identity ; az login (ou fab auth login).
-Les items doivent exister sous forme de dossiers d'items dans le repo (peuplés par la Git integration Fabric).
+"""deploy.py — Deploy/redeploy Fabric items from this repo to a workspace via fabric-cicd.
+Prerequisites: pip install fabric-cicd azure-identity ; az login (or fab auth login).
+Items must exist as item folders in the repo (populated by Fabric Git integration).
 """
+import os
 from azure.identity import AzureCliCredential
 from fabric_cicd import FabricWorkspace, publish_all_items, unpublish_all_orphan_items
 
-WORKSPACE_ID = "96a844c1-e64e-491b-b536-d3846330d598"
-REPO_DIR = "."  # racine du repo fabric-wildfire-demo
+WORKSPACE_ID = os.environ.get("FABRIC_WORKSPACE_ID", "<your-workspace-id>")
+REPO_DIR = "."  # root of the fabric-wildfire-demo repo
 
 workspace = FabricWorkspace(
     workspace_id=WORKSPACE_ID,
@@ -19,4 +20,4 @@ workspace = FabricWorkspace(
 )
 publish_all_items(workspace)
 unpublish_all_orphan_items(workspace)
-# Note: Digital Twin Builder (preview) et Data Agent ne sont pas forcément pris en charge par fabric-cicd -> refaire dans le portail.
+# Note: Digital Twin Builder (preview) and Data Agent may not be supported by fabric-cicd -> recreate in the portal.

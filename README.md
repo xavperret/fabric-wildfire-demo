@@ -113,8 +113,9 @@ fabric-wildfire-demo/
 ├── docs/
 │   ├── BUILD_GUIDE.md                  # step-by-step, phases 0 → 7
 │   ├── ARCHITECTURE.md                 # medallion, ontology, geospatial, alerting
-│   ├── DEMO_GUIDE.md                   # 🎬 scénario de démo 10 min (Var + Fontainebleau)
-│   └── DEMO_SCRIPT.md                  # the ~8-minute on-stage walkthrough
+│   ├── DEMO_GUIDE.md                   # 🎬 12-min demo scenario (Var + Fontainebleau)
+│   ├── DEMO_SCRIPT.md                  # the ~8-minute on-stage walkthrough
+│   └── Ontology_Wildfire.pptx          # 6-slide ontology visual deck
 └── map/
     ├── index.html                      # companion Leaflet map (zooms to the fire)
     └── sample_snapshot.geojson         # demo data for the map
@@ -126,7 +127,7 @@ fabric-wildfire-demo/
 
 Follow **[`docs/BUILD_GUIDE.md`](docs/BUILD_GUIDE.md)** for the full, numbered walkthrough. It is organised in the same phases the demo was built in:
 
-> 🎬 **Pour le scénario de démo prêt à l'emploi (10 min, Var + Fontainebleau), voir [`docs/DEMO_GUIDE.md`](docs/DEMO_GUIDE.md)**
+> 🎬 **For the ready-to-use demo scenario (12 min, Var + Fontainebleau), see [`docs/DEMO_GUIDE.md`](docs/DEMO_GUIDE.md)**
 
 - **Phase 0 — Socle:** capacity, workspace, and the three keys (FIRMS `MAP_KEY`, OpenSky OAuth2, Azure Maps).
 - **Phase 1 — Feux:** FIRMS ingestion notebook → Eventhouse; first map.
@@ -167,6 +168,68 @@ You can author most of the *code* assets locally and let Fabric’s Git integrat
 - **Simulated feeds are labeled.** Firefighter/**SDIS** units have no public real-time API and are **simulated**. Aircraft may also be simulated when the live feed is sparse. Every simulated element is disclosed in the UI and data.
 - **Digital Twin Builder is in preview.** The ontology layer (Fabric IQ) is a **preview** capability; behaviour and APIs may change.
 - **Not operational.** This is a **demo/sample**. It is not a certified dispatch tool and must not be used for real emergency decisions.
+
+---
+
+## What it looks like
+
+### 🗺️ Companion Leaflet map
+
+The interactive map shows fires (red, sized by FRP), aircraft (blue), and SDIS ground units (green). One-click zoom to Var or Fontainebleau, plus a **Simulate alert** button that flies to the hottest fire.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  🔥 Fabric Wildfire Response — Live Map                     │
+│                                                             │
+│            🔴 Fontainebleau (FRP 280)                       │
+│        🔵 PELICAN44 ──────▶  🟢 SDIS77                     │
+│                                                             │
+│                    ~ ~ ~ ~ ~ ~ ~                            │
+│                                                             │
+│         🔴🔴 Var cluster        🔵 DRAGON83                 │
+│    🔴 Bormes (FRP 1110)   🔵 PELICAN32                     │
+│        🟢 SDIS83    🟢 SDIS83    ⚫ SDIS83 (engaged)       │
+│                                                             │
+│  [🔥 Simulate alert] [📍 Zoom Var] [📍 Zoom Fontainebleau] │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 📊 Real-Time Dashboard (dispatch table)
+
+| Commune | Priority Score | FRP Total | Pop. 30km | Recommendation |
+|---------|---------------|-----------|-----------|----------------|
+| Toulon | 2490 | 340 | 215,000 | SOL + AÉRIEN |
+| Fontainebleau | 2130 | 280 | 185,000 | SOL + AÉRIEN |
+| Bormes-les-Mimosas | 1864 | 1110 | 75,400 | SOL + AÉRIEN |
+| Fréjus | 1140 | 720 | 42,000 | SOL + AÉRIEN |
+| Nemours | 670 | 150 | 52,000 | SOL + AÉRIEN |
+| Melun | 345 | 65 | 28,000 | SOL |
+| Draguignan | 180 | 95 | 8,500 | AÉRIEN |
+| Collobrières | 77 | 45 | 3,200 | SOL |
+
+### 🧬 Ontology (Fabric IQ / Digital Twin Builder)
+
+```mermaid
+graph TD
+    FZ["🔥 FireZone\ncell · frp · priority_score"]
+    C["🏘️ Commune\nname · population · lat/lon"]
+    A["✈️ Aircraft\ncallsign · role · status"]
+    U["🚒 FirefighterUnit\nunit_id · base · status"]
+    CI["🏥 CriticalInfra\nname · type · lat/lon"]
+
+    FZ -->|THREATENS| C
+    FZ -->|ASSIGNED_TO| A
+    FZ -->|COVERS| U
+    FZ -->|NEAR| CI
+
+    style FZ fill:#B85042,color:#fff
+    style C fill:#A7BEAE,color:#fff
+    style A fill:#2F6FED,color:#fff
+    style U fill:#2F9E44,color:#fff
+    style CI fill:#868E96,color:#fff
+```
+
+---
 
 ## License
 

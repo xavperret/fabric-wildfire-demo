@@ -1,15 +1,16 @@
-# 🔥 Fabric Wildfire Response — Guide de démo
+# 🔥 Fabric Wildfire Response — Demo Guide
 
-## Vue d'ensemble
+## Overview
 
-Cette démo illustre comment Microsoft Fabric unifie **données satellite, IA et coordination terrain** pour la réponse aux feux de forêt en France. En 10 minutes, vous montrez :
+This demo shows how Microsoft Fabric unifies **satellite data, AI, and field coordination** for wildfire response in France. In 12 minutes you walk the audience through:
 
-1. Ingestion de données FIRMS (NASA) en temps réel
-2. Algorithme de dispatch KQL (clustering + population + priorisation)
-3. Alerte Teams automatique via Activator
-4. Carte interactive Leaflet
-5. Dashboard Real-Time avec Azure Maps
-6. Agent IA conversationnel (AI Skill)
+1. Real-time ingestion of NASA FIRMS satellite detections
+2. A semantic ontology linking fires, population, aircraft, and ground crews (Fabric IQ)
+3. A KQL dispatch algorithm (clustering + population + priority scoring)
+4. Automatic Teams alerts via Activator
+5. An interactive Leaflet map
+6. A Real-Time Dashboard with Azure Maps
+7. A conversational AI agent (AI Skill)
 
 ---
 
@@ -31,121 +32,108 @@ Cette démo illustre comment Microsoft Fabric unifie **données satellite, IA et
                         │
                         ▼
               ┌─────────────────┐
-              │  Carte Leaflet  │
+              │  Leaflet Map    │
               │  (companion)    │
               └─────────────────┘
 ```
 
 ---
 
-## Pré-requis
+## Prerequisites
 
-| Élément | Détail |
-|---------|--------|
-| Workspace Fabric | `Wildfire-Demo` avec capacité Trial ou F64+ |
-| Clé FIRMS | Gratuite sur [firms.modaps.eosdis.nasa.gov](https://firms.modaps.eosdis.nasa.gov/api/) |
-| Navigateur | Chrome / Edge pour la carte Leaflet |
+| Item | Details |
+|------|---------|
+| Fabric workspace | `Wildfire-Demo` with Trial or F64+ capacity |
+| FIRMS key | Free at [firms.modaps.eosdis.nasa.gov](https://firms.modaps.eosdis.nasa.gov/api/) |
+| Browser | Chrome / Edge for the Leaflet map |
 
 ---
 
-## Scénario de démo (10 min)
+## Demo scenario (12 min)
 
-### Acte 1 — Le problème (2 min)
+### Act 1 — The problem (2 min)
 
-> *"Chaque été, la France fait face à des feux de forêt de plus en plus intenses. Les SDIS doivent décider en quelques minutes : envoyer du terrestre, de l'aérien, ou les deux. Aujourd'hui, on leur montre comment Fabric les aide."*
+> *"Every summer France faces increasingly intense wildfires. SDIS fire departments must decide in minutes: send ground crews, air tankers, or both. Today we show them how Fabric helps."*
 
-- Montrez la **carte Leaflet** (vue France entière)
-- Cliquez **📍 Zoom Var** → 4 feux dans le massif des Maures
-- Cliquez **📍 Zoom Fontainebleau** → 3 feux en forêt domaniale
+- Show the **Leaflet map** (full France view)
+- Click **📍 Zoom Var** → 4 fires in the Maures massif
+- Click **📍 Zoom Fontainebleau** → 3 fires in the national forest
 
-### Acte 2 — L'ontologie (1 min 30)
+### Act 2 — The ontology (1 min 30)
 
-> *"Fabric IQ relie les quatre silos en un seul modèle sémantique. Un foyer 'sait' désormais quelles communes il menace, quels moyens le couvrent, quelles infrastructures sont à côté."*
+> *"Fabric IQ links the four silos into a single semantic model. A fire zone now 'knows' which towns it threatens, which assets cover it, and which critical infrastructure is nearby."*
 
-- Ouvrez **Ontology_Wildfire** dans le workspace (Digital Twin Builder)
-- Montrez les 5 entités : FireZone, Commune, Aircraft, FirefighterUnit, CriticalInfrastructure
-- Traversez une relation live : d'un FireZone → THREATENS → communes à risque
-- Montrez ASSIGNED_TO → aéronefs, COVERS → unités SDIS
-- Support visuel : [`docs/Ontology_Wildfire.pptx`](Ontology_Wildfire.pptx) (6 slides)
+- Open **Ontology_Wildfire** in the workspace (Digital Twin Builder)
+- Show the 5 entity types: FireZone, Commune, Aircraft, FirefighterUnit, CriticalInfrastructure
+- Traverse a relationship live: FireZone → THREATENS → communes at risk
+- Show ASSIGNED_TO → aircraft, COVERS → SDIS units
+- Visual support: [`docs/Ontology_Wildfire.pptx`](Ontology_Wildfire.pptx) (6 slides)
 
-### Acte 3 — L'intelligence (3 min)
+### Act 3 — The intelligence (3 min)
 
-> *"Fabric ingère les détections satellite toutes les 10 min et calcule automatiquement les priorités."*
+> *"Fabric ingests satellite detections every 10 minutes and automatically computes priorities."*
 
-- Ouvrez le **Real-Time Dashboard** dans Fabric
-- Montrez le tableau de dispatch : priority_score, population menacée, recommandation
-- Pointez Toulon (score 2490 — 215k habitants à 30km !)
-- Pointez Fontainebleau (score 2130 — forêt domaniale + 185k habitants)
+- Open the **Real-Time Dashboard** in Fabric
+- Show the dispatch table: priority_score, threatened population, recommendation
+- Highlight Toulon (score 2490 — 215k people within 30 km!)
+- Highlight Fontainebleau (score 2130 — national forest + 185k people)
 
-### Acte 4 — L'alerte (2 min)
+### Act 4 — The alert (2 min)
 
-> *"Quand le score dépasse le seuil, Fabric déclenche une alerte Teams instantanément."*
+> *"When the score exceeds the threshold, Fabric fires a Teams alert instantly."*
 
-- Montrez l'**Activator** dans le workspace → règle "frp > 50"
-- Montrez la notification Teams reçue (ou faites un "Test action")
-- Cliquez **🔥 Simuler une alerte** sur la carte → zoom animé sur le feu le plus chaud
+- Show the **Activator** in the workspace → rule "frp > 50"
+- Show the Teams notification received (or run "Test action")
+- Click **🔥 Simulate alert** on the map → animated zoom to the hottest fire
 
-### Acte 5 — L'agent IA (3 min)
+### Act 5 — The AI agent (3 min)
 
-> *"Et si le coordinateur pouvait simplement poser des questions en français ?"*
+> *"What if the crisis coordinator could simply ask questions in plain language?"*
 
-- Ouvrez **Agent_Wildfire** (AI Skill)
-- Posez : *"Quels sont les feux les plus critiques ?"*
-- Posez : *"Compare la situation Var vs Île-de-France"*
-- Posez : *"Pour Fontainebleau, quelle est ta recommandation ?"*
+- Open **Agent_Wildfire** (AI Skill)
+- Ask: *"What are the most critical fires?"*
+- Ask: *"Compare the situation in Var vs Île-de-France"*
+- Ask: *"For Fontainebleau, what is your operational recommendation?"*
 
 ### Conclusion
 
-> *"Tout ça avec UNE plateforme : Fabric. Données satellite, KQL en temps réel, alertes, dashboards, IA — un seul workspace."*
+> *"All of this on ONE platform: Fabric. Satellite data, real-time KQL, alerts, dashboards, AI — a single workspace."*
 
 ---
 
-## Lancer la carte Leaflet
+## Running the Leaflet map
 
 ```bash
 cd map
 python -m http.server 8080
-# Ouvrir http://localhost:8080
+# Open http://localhost:8080
 ```
 
-**Boutons :**
-- 🔥 **Simuler une alerte** → zoom animé sur le feu le plus intense (FRP max)
-- 📍 **Zoom Var** → région Bormes / Hyères / La Londe
-- 📍 **Zoom Fontainebleau** → forêt domaniale / Nemours / Melun
+**Buttons:**
+- 🔥 **Simulate alert** → animated zoom to the most intense fire (max FRP)
+- 📍 **Zoom Var** → Bormes / Hyères / La Londe region
+- 📍 **Zoom Fontainebleau** → national forest / Nemours / Melun
 
 ---
 
-## Notebooks (ordre d'exécution)
+## Notebooks (execution order)
 
-| # | Notebook | Rôle |
-|---|----------|------|
-| 01 | `01_ingest_firms.ipynb` | Récupère les détections satellite FIRMS |
-| 02 | `02_ingest_opensky.ipynb` | Récupère les positions aéronefs (optionnel) |
-| 03 | `03_dispatch_logic.ipynb` | Exécute la logique de dispatch KQL |
-| 04 | `04_load_reference_data.ipynb` | Charge communes + infra critiques |
-| 05 | `05_inject_demo_fire.ipynb` | Injecte un feu de démo dans l'Eventstream |
-
----
-
-## Identifiants du workspace
-
-| Item | ID |
-|------|-----|
-| Workspace | `96a844c1-e64e-491b-b536-d3846330d598` |
-| Lakehouse | `1045edcf-6fe1-4788-a552-1dfea509812b` |
-| Eventhouse | `28cef4a6-18bd-414f-8b41-907e4d4a752a` |
-| KQL Database | `8eae510f-f9e7-4c8c-bd2b-4f6ef45e4709` |
-| Eventstream | `98c25341-a09c-4450-9732-864e34320284` |
-| Query URI | `https://trd-vhu31241kdu6ebwvx7.z0.kusto.fabric.microsoft.com` |
+| # | Notebook | Purpose |
+|---|----------|---------|
+| 01 | `01_ingest_firms.ipynb` | Fetch FIRMS satellite detections |
+| 02 | `02_ingest_opensky.ipynb` | Fetch aircraft positions (optional) |
+| 03 | `03_dispatch_logic.ipynb` | Run KQL dispatch logic |
+| 04 | `04_load_reference_data.ipynb` | Load communes + critical infrastructure |
+| 05 | `05_inject_demo_fire.ipynb` | Inject a demo fire into the Eventstream |
 
 ---
 
 ## Troubleshooting
 
-| Problème | Solution |
-|----------|----------|
-| Carte vide | Lancez via `python -m http.server`, pas en `file://` |
-| 0 résultats dans le dashboard | Retirez le filtre `ingestion_time() > ago(6h)` |
-| Agent ne répond pas | Vérifiez que `DispatchResults` est ajouté comme source |
-| Activator ne se déclenche pas | Vérifiez Object ID = `detection_id` dans la règle |
-| KQL "column not found" | Utilisez `| getschema` pour voir les vrais noms de colonnes |
+| Problem | Solution |
+|---------|----------|
+| Empty map | Serve via `python -m http.server`, not `file://` |
+| 0 results in dashboard | Remove the `ingestion_time() > ago(6h)` filter |
+| Agent not responding | Verify `DispatchResults` is added as a data source |
+| Activator not firing | Check Object ID = `detection_id` in the trigger rule |
+| KQL "column not found" | Use `| getschema` to inspect actual column names |
