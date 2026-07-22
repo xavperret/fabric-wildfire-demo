@@ -169,4 +169,4 @@ You can author most of the *code* assets locally and let Fabric’s Git integrat
 
 **MIT** — sample/demo code, provided *as-is*, no warranty. See [`LICENSE`](LICENSE).
 
-*Owner: Xavier Perret — GBB Data Platform, France.*
+*Owner: Xavier Perret — EMEA Data Platform.*
