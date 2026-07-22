@@ -58,7 +58,17 @@ Cette démo illustre comment Microsoft Fabric unifie **données satellite, IA et
 - Cliquez **📍 Zoom Var** → 4 feux dans le massif des Maures
 - Cliquez **📍 Zoom Fontainebleau** → 3 feux en forêt domaniale
 
-### Acte 2 — L'intelligence (3 min)
+### Acte 2 — L'ontologie (1 min 30)
+
+> *"Fabric IQ relie les quatre silos en un seul modèle sémantique. Un foyer 'sait' désormais quelles communes il menace, quels moyens le couvrent, quelles infrastructures sont à côté."*
+
+- Ouvrez **Ontology_Wildfire** dans le workspace (Digital Twin Builder)
+- Montrez les 5 entités : FireZone, Commune, Aircraft, FirefighterUnit, CriticalInfrastructure
+- Traversez une relation live : d'un FireZone → THREATENS → communes à risque
+- Montrez ASSIGNED_TO → aéronefs, COVERS → unités SDIS
+- Support visuel : [`docs/Ontology_Wildfire.pptx`](Ontology_Wildfire.pptx) (6 slides)
+
+### Acte 3 — L'intelligence (3 min)
 
 > *"Fabric ingère les détections satellite toutes les 10 min et calcule automatiquement les priorités."*
 
@@ -67,7 +77,7 @@ Cette démo illustre comment Microsoft Fabric unifie **données satellite, IA et
 - Pointez Toulon (score 2490 — 215k habitants à 30km !)
 - Pointez Fontainebleau (score 2130 — forêt domaniale + 185k habitants)
 
-### Acte 3 — L'alerte (2 min)
+### Acte 4 — L'alerte (2 min)
 
 > *"Quand le score dépasse le seuil, Fabric déclenche une alerte Teams instantanément."*
 
@@ -75,7 +85,7 @@ Cette démo illustre comment Microsoft Fabric unifie **données satellite, IA et
 - Montrez la notification Teams reçue (ou faites un "Test action")
 - Cliquez **🔥 Simuler une alerte** sur la carte → zoom animé sur le feu le plus chaud
 
-### Acte 4 — L'agent IA (3 min)
+### Acte 5 — L'agent IA (3 min)
 
 > *"Et si le coordinateur pouvait simplement poser des questions en français ?"*
 
