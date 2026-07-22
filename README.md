@@ -219,4 +219,4 @@ graph TD
 
 **MIT** — sample/demo code, provided *as-is*, no warranty. See [`LICENSE`](LICENSE).
 
-*Owner: Xavier Perret — GBB Data Platform, France.*
+*Owner: Xavier Perret — EMEA Data Platform.*
