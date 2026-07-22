@@ -74,8 +74,10 @@
 
   <div class="banner">
     <h1>🔥 Fabric Wildfire Response — Live Map (demo)</h1>
-    <p>France, Sud-Est · compagnon de la Real-Time Dashboard (Azure Maps). Données d'exemple, non opérationnelles.</p>
+    <p>France · Var + Fontainebleau · compagnon de la Real-Time Dashboard (Azure Maps). Données d'exemple, non opérationnelles.</p>
     <button id="simulate" class="sim-btn">🔥 Simuler une alerte</button>
+    <button id="goto-var" class="sim-btn" style="background:#2f6fed;margin-top:4px;">📍 Zoom Var</button>
+    <button id="goto-fontainebleau" class="sim-btn" style="background:#2f6fed;margin-top:4px;">📍 Zoom Fontainebleau</button>
   </div>
 
   <div id="legend" class="legend" style="display:none;">
@@ -87,8 +89,8 @@
   </div>
 
   <script>
-    // --- Base map, centered on Sud-Est France ---------------------------------
-    var map = L.map('map', { zoomControl: true }).setView([43.4, 5.8], 8);
+    // --- Base map, centered on France to show both Var and Fontainebleau ------
+    var map = L.map('map', { zoomControl: true }).setView([45.8, 4.5], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
@@ -201,6 +203,14 @@
       setTimeout(function () {
         hottestFire.marker.openPopup();
       }, 1600);
+    });
+
+    // --- Region shortcuts -----------------------------------------------------
+    document.getElementById('goto-var').addEventListener('click', function () {
+      map.flyTo([43.2, 6.3], 10, { duration: 1.2 });
+    });
+    document.getElementById('goto-fontainebleau').addEventListener('click', function () {
+      map.flyTo([48.41, 2.70], 11, { duration: 1.2 });
     });
   </script>
 </body>
