@@ -113,6 +113,7 @@ fabric-wildfire-demo/
 ├── docs/
 │   ├── BUILD_GUIDE.md                  # step-by-step, phases 0 → 7
 │   ├── ARCHITECTURE.md                 # medallion, ontology, geospatial, alerting
+│   ├── DEMO_GUIDE.md                   # 🎬 scénario de démo 10 min (Var + Fontainebleau)
 │   └── DEMO_SCRIPT.md                  # the ~8-minute on-stage walkthrough
 └── map/
     ├── index.html                      # companion Leaflet map (zooms to the fire)
@@ -124,6 +125,8 @@ fabric-wildfire-demo/
 ## Setup / how to build
 
 Follow **[`docs/BUILD_GUIDE.md`](docs/BUILD_GUIDE.md)** for the full, numbered walkthrough. It is organised in the same phases the demo was built in:
+
+> 🎬 **Pour le scénario de démo prêt à l'emploi (10 min, Var + Fontainebleau), voir [`docs/DEMO_GUIDE.md`](docs/DEMO_GUIDE.md)**
 
 - **Phase 0 — Socle:** capacity, workspace, and the three keys (FIRMS `MAP_KEY`, OpenSky OAuth2, Azure Maps).
 - **Phase 1 — Feux:** FIRMS ingestion notebook → Eventhouse; first map.
