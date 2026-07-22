@@ -173,39 +173,23 @@ You can author most of the *code* assets locally and let Fabric’s Git integrat
 
 ## What it looks like
 
-### 🗺️ Companion Leaflet map
+### 🗺️ Companion Leaflet Map
 
-The interactive map shows fires (red, sized by FRP), aircraft (blue), and SDIS ground units (green). One-click zoom to Var or Fontainebleau, plus a **Simulate alert** button that flies to the hottest fire.
+Interactive map showing fires (red circles sized by FRP), aircraft (blue triangles), and SDIS ground units (green squares). One-click zoom to Var or Fontainebleau, plus a **Simulate alert** button.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  🔥 Fabric Wildfire Response — Live Map                     │
-│                                                             │
-│            🔴 Fontainebleau (FRP 280)                       │
-│        🔵 PELICAN44 ──────▶  🟢 SDIS77                     │
-│                                                             │
-│                    ~ ~ ~ ~ ~ ~ ~                            │
-│                                                             │
-│         🔴🔴 Var cluster        🔵 DRAGON83                 │
-│    🔴 Bormes (FRP 1110)   🔵 PELICAN32                     │
-│        🟢 SDIS83    🟢 SDIS83    ⚫ SDIS83 (engaged)       │
-│                                                             │
-│  [🔥 Simulate alert] [📍 Zoom Var] [📍 Zoom Fontainebleau] │
-└─────────────────────────────────────────────────────────────┘
-```
+![Wildfire Map Mockup](docs/images/mockup-map.svg)
 
-### 📊 Real-Time Dashboard (dispatch table)
+### 📊 Real-Time Dashboard
 
-| Commune | Priority Score | FRP Total | Pop. 30km | Recommendation |
-|---------|---------------|-----------|-----------|----------------|
-| Toulon | 2490 | 340 | 215,000 | SOL + AÉRIEN |
-| Fontainebleau | 2130 | 280 | 185,000 | SOL + AÉRIEN |
-| Bormes-les-Mimosas | 1864 | 1110 | 75,400 | SOL + AÉRIEN |
-| Fréjus | 1140 | 720 | 42,000 | SOL + AÉRIEN |
-| Nemours | 670 | 150 | 52,000 | SOL + AÉRIEN |
-| Melun | 345 | 65 | 28,000 | SOL |
-| Draguignan | 180 | 95 | 8,500 | AÉRIEN |
-| Collobrières | 77 | 45 | 3,200 | SOL |
+Dark-themed Fabric Real-Time Dashboard with KPI cards, dispatch priority table, and Azure Maps tile — all powered by live KQL queries against the Eventhouse.
+
+![Dashboard Mockup](docs/images/mockup-dashboard.svg)
+
+### 🤖 AI Skill (Data Agent)
+
+Ask natural language questions grounded on the KQL DispatchResults table. The agent returns structured answers with priority scores, population data, and recommendations.
+
+![AI Skill Mockup](docs/images/mockup-ai-skill.svg)
 
 ### 🧬 Ontology (Fabric IQ / Digital Twin Builder)
 

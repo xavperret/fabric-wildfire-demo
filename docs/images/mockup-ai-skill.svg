@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <filter id="s" x="-3%" y="-3%" width="106%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="400" fill="#fafaf8" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#2c3e50" font-size="18" font-weight="bold">🤖 AI Skill — Natural Language Wildfire Queries</text>
+  <line x1="100" y1="48" x2="800" y2="48" stroke="#eee" stroke-width="1"/>
+
+  <!-- Chat container -->
+  <rect x="60" y="65" width="780" height="310" rx="10" fill="white" stroke="#e0e0e0" stroke-width="1" filter="url(#s)"/>
+
+  <!-- User message 1 -->
+  <rect x="400" y="80" width="410" height="40" rx="16" fill="#0078d4"/>
+  <text x="420" y="105" fill="white" font-size="13">What is the highest priority fire zone right now?</text>
+
+  <!-- Bot response 1 -->
+  <rect x="85" y="130" width="520" height="85" rx="16" fill="#f0f0f0"/>
+  <text x="105" y="152" fill="#333" font-size="13" font-weight="600">🔥 Toulon is the top priority (score: 2,490)</text>
+  <text x="105" y="172" fill="#555" font-size="12">FRP: 340 MW · Population within 30 km: 215,000</text>
+  <text x="105" y="192" fill="#555" font-size="12">Recommendation: Deploy ground + aerial units (SOL + AÉRIEN)</text>
+  <text x="105" y="207" fill="#888" font-size="10">Source: DispatchResults · KQL Database EH_Wildfire</text>
+
+  <!-- User message 2 -->
+  <rect x="340" y="225" width="470" height="40" rx="16" fill="#0078d4"/>
+  <text x="360" y="250" fill="white" font-size="13">Which communes near Fontainebleau are threatened?</text>
+
+  <!-- Bot response 2 -->
+  <rect x="85" y="275" width="540" height="80" rx="16" fill="#f0f0f0"/>
+  <text x="105" y="297" fill="#333" font-size="13" font-weight="600">3 communes in the Fontainebleau area:</text>
+  <text x="105" y="317" fill="#555" font-size="12">1. Fontainebleau — priority 2,130 · FRP 280 · pop. 185K</text>
+  <text x="105" y="337" fill="#555" font-size="12">2. Nemours — priority 670 · FRP 150 · pop. 52K</text>
+  <text x="105" y="352" fill="#555" font-size="12">3. Melun — priority 345 · FRP 65 · pop. 28K</text>
+
+  <!-- Copilot badge -->
+  <circle cx="80" cy="152" r="14" fill="#0078d4"/>
+  <text x="80" y="157" text-anchor="middle" fill="white" font-size="12" font-weight="bold">AI</text>
+  <circle cx="80" cy="302" r="14" fill="#0078d4"/>
+  <text x="80" y="307" text-anchor="middle" fill="white" font-size="12" font-weight="bold">AI</text>
+
+  <!-- Powered by label -->
+  <text x="450" y="390" text-anchor="middle" fill="#aaa" font-size="10">Powered by Microsoft Fabric AI Skill · KQL Database · Agent_Wildfire</text>
+</svg>
