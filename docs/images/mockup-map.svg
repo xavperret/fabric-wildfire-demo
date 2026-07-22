@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4e6f1"/>
+      <stop offset="100%" stop-color="#a9cce3"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="url(#sea)" rx="12"/>
+
+  <!-- Title bar -->
+  <rect width="900" height="48" fill="#1a1a2e" rx="12"/>
+  <rect y="12" width="900" height="36" fill="#1a1a2e"/>
+  <text x="20" y="31" fill="#ff6b6b" font-size="20" font-weight="bold">🔥</text>
+  <text x="45" y="31" fill="white" font-size="16" font-weight="600">Fabric Wildfire Response — Live Map</text>
+  <rect x="680" y="10" width="90" height="28" rx="4" fill="#e74c3c" opacity="0.9"/>
+  <text x="695" y="29" fill="white" font-size="11" font-weight="600">⚡ LIVE</text>
+
+  <!-- Simplified France outline -->
+  <path d="M320,80 L380,70 L440,85 L500,78 L540,100 L560,130 L570,180 L590,220 L580,260 L600,300 L590,340 L570,370 L530,400 L490,420 L450,430 L400,425 L360,400 L330,370 L310,340 L300,300 L280,260 L270,220 L280,180 L290,140 L310,100 Z"
+        fill="#e8e4c9" stroke="#b0a990" stroke-width="2" filter="url(#shadow)" opacity="0.7"/>
+
+  <!-- Grid lines (subtle) -->
+  <line x1="100" y1="150" x2="800" y2="150" stroke="#93b5c6" stroke-width="0.5" opacity="0.3"/>
+  <line x1="100" y1="250" x2="800" y2="250" stroke="#93b5c6" stroke-width="0.5" opacity="0.3"/>
+  <line x1="100" y1="350" x2="800" y2="350" stroke="#93b5c6" stroke-width="0.5" opacity="0.3"/>
+  <line x1="300" y1="60" x2="300" y2="460" stroke="#93b5c6" stroke-width="0.5" opacity="0.3"/>
+  <line x1="450" y1="60" x2="450" y2="460" stroke="#93b5c6" stroke-width="0.5" opacity="0.3"/>
+  <line x1="600" y1="60" x2="600" y2="460" stroke="#93b5c6" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- === VAR REGION (bottom-right of France) === -->
+  <!-- Fire cluster glow -->
+  <circle cx="530" cy="385" r="45" fill="#e74c3c" opacity="0.12" filter="url(#glow)"/>
+
+  <!-- Fire: Bormes-les-Mimosas (big) -->
+  <circle cx="520" cy="390" r="18" fill="#e74c3c" opacity="0.85" stroke="#c0392b" stroke-width="2"/>
+  <text x="520" y="395" text-anchor="middle" fill="white" font-size="10" font-weight="bold">1110</text>
+
+  <!-- Fire: near Toulon -->
+  <circle cx="495" cy="375" r="13" fill="#e74c3c" opacity="0.8" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="495" y="379" text-anchor="middle" fill="white" font-size="9" font-weight="bold">340</text>
+
+  <!-- Fire: Fréjus -->
+  <circle cx="555" cy="370" r="14" fill="#e74c3c" opacity="0.8" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="555" y="374" text-anchor="middle" fill="white" font-size="9" font-weight="bold">720</text>
+
+  <!-- Fire: Collobrières -->
+  <circle cx="535" cy="400" r="8" fill="#ff7675" opacity="0.8" stroke="#d63031" stroke-width="1"/>
+
+  <!-- Aircraft: DRAGON83 -->
+  <polygon points="580,355 574,365 586,365" fill="#2980b9" stroke="#1a5276" stroke-width="1.5"/>
+  <text x="592" y="363" fill="#2980b9" font-size="10" font-weight="600">DRAGON83</text>
+
+  <!-- Aircraft: PELICAN32 -->
+  <polygon points="480,355 474,365 486,365" fill="#2980b9" stroke="#1a5276" stroke-width="1.5"/>
+  <text x="444" y="350" fill="#2980b9" font-size="10" font-weight="600">PELICAN32</text>
+
+  <!-- SDIS Units -->
+  <rect x="505" y="410" width="10" height="10" fill="#27ae60" stroke="#1e8449" stroke-width="1" rx="2"/>
+  <text x="520" y="419" fill="#27ae60" font-size="9" font-weight="600">SDIS83-A</text>
+  <rect x="545" y="410" width="10" height="10" fill="#27ae60" stroke="#1e8449" stroke-width="1" rx="2"/>
+  <rect x="465" y="395" width="10" height="10" fill="#555" stroke="#333" stroke-width="1" rx="2"/>
+  <text x="445" y="404" fill="#555" font-size="9" font-weight="600">Engaged</text>
+
+  <!-- Var label -->
+  <rect x="510" y="430" width="90" height="22" rx="4" fill="#2c3e50" opacity="0.85"/>
+  <text x="555" y="445" text-anchor="middle" fill="white" font-size="11" font-weight="600">📍 Var Region</text>
+
+  <!-- === FONTAINEBLEAU REGION (north-center) === -->
+  <circle cx="400" cy="175" r="35" fill="#e74c3c" opacity="0.1" filter="url(#glow)"/>
+
+  <!-- Fire: Fontainebleau main -->
+  <circle cx="395" cy="170" r="14" fill="#e74c3c" opacity="0.85" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="395" y="174" text-anchor="middle" fill="white" font-size="9" font-weight="bold">280</text>
+
+  <!-- Fire: Nemours -->
+  <circle cx="380" cy="190" r="10" fill="#e74c3c" opacity="0.75" stroke="#c0392b" stroke-width="1"/>
+  <text x="380" y="194" text-anchor="middle" fill="white" font-size="8" font-weight="bold">150</text>
+
+  <!-- Fire: near Melun -->
+  <circle cx="410" cy="155" r="7" fill="#ff7675" opacity="0.7" stroke="#d63031" stroke-width="1"/>
+
+  <!-- Aircraft: PELICAN44 -->
+  <polygon points="430,160 424,170 436,170" fill="#2980b9" stroke="#1a5276" stroke-width="1.5"/>
+  <text x="440" y="168" fill="#2980b9" font-size="10" font-weight="600">PELICAN44</text>
+
+  <!-- SDIS Unit -->
+  <rect x="365" y="200" width="10" height="10" fill="#27ae60" stroke="#1e8449" stroke-width="1" rx="2"/>
+  <text x="380" y="209" fill="#27ae60" font-size="9" font-weight="600">SDIS77</text>
+
+  <!-- Fontainebleau label -->
+  <rect x="350" y="220" width="115" height="22" rx="4" fill="#2c3e50" opacity="0.85"/>
+  <text x="407" y="235" text-anchor="middle" fill="white" font-size="11" font-weight="600">📍 Fontainebleau</text>
+
+  <!-- === LEGEND === -->
+  <rect x="20" y="60" width="170" height="145" rx="8" fill="white" opacity="0.92" filter="url(#shadow)"/>
+  <text x="35" y="82" fill="#2c3e50" font-size="13" font-weight="bold">Legend</text>
+  <line x1="35" y1="88" x2="170" y2="88" stroke="#eee" stroke-width="1"/>
+
+  <circle cx="45" cy="105" r="7" fill="#e74c3c" opacity="0.8"/>
+  <text x="60" y="109" fill="#333" font-size="11">Fire (size = FRP)</text>
+
+  <polygon points="45,122 39,132 51,132" fill="#2980b9"/>
+  <text x="60" y="131" fill="#333" font-size="11">Aircraft</text>
+
+  <rect x="39" y="143" width="10" height="10" fill="#27ae60" rx="2"/>
+  <text x="60" y="153" fill="#333" font-size="11">SDIS unit (free)</text>
+
+  <rect x="39" y="163" width="10" height="10" fill="#555" rx="2"/>
+  <text x="60" y="173" fill="#333" font-size="11">SDIS unit (engaged)</text>
+
+  <circle cx="45" cy="190" r="6" fill="#e74c3c" opacity="0.15"/>
+  <circle cx="45" cy="190" r="3" fill="#e74c3c" opacity="0.5"/>
+  <text x="60" y="194" fill="#333" font-size="11">Threat radius</text>
+
+  <!-- === BUTTONS === -->
+  <rect x="20" y="465" width="145" height="34" rx="6" fill="#e74c3c" filter="url(#shadow)"/>
+  <text x="92" y="487" text-anchor="middle" fill="white" font-size="12" font-weight="600">🔥 Simulate alert</text>
+
+  <rect x="180" y="465" width="110" height="34" rx="6" fill="#3498db" filter="url(#shadow)"/>
+  <text x="235" y="487" text-anchor="middle" fill="white" font-size="12" font-weight="600">📍 Zoom Var</text>
+
+  <rect x="305" y="465" width="165" height="34" rx="6" fill="#3498db" filter="url(#shadow)"/>
+  <text x="387" y="487" text-anchor="middle" fill="white" font-size="12" font-weight="600">📍 Zoom Fontainebleau</text>
+
+  <!-- Coordinates display -->
+  <text x="750" y="500" fill="#7f8c8d" font-size="10">43.2°N — 6.1°E</text>
+  <text x="810" y="485" fill="#95a5a6" font-size="9">zoom: 6</text>
+
+  <!-- Attribution -->
+  <text x="20" y="512" fill="#aaa" font-size="9">© OpenStreetMap contributors · Leaflet</text>
+</svg>

@@ -1,7 +1,7 @@
 {
   "type": "FeatureCollection",
   "name": "fabric_wildfire_sample_snapshot",
-  "note": "Demo snapshot for the companion Leaflet map. Coordinates are [lon, lat] per the GeoJSON spec. Fires are around Bormes-les-Mimosas / Hyeres / La Londe (Var). Firefighter/SDIS units are SIMULATED and labeled. Not operational data.",
+  "note": "Demo snapshot for the companion Leaflet map. Coordinates are [lon, lat] per the GeoJSON spec. Fires in the Var (Bormes/Hyères/La Londe) AND Fontainebleau/Seine-et-Marne. Firefighter/SDIS units are SIMULATED. Not operational data.",
   "features": [
     {
       "type": "Feature",
@@ -166,6 +166,97 @@
       "geometry": {
         "type": "Point",
         "coordinates": [5.5710, 43.2920]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 72.3,
+        "commune": "Fontainebleau",
+        "detected_utc": "2026-07-22T14:12:00Z",
+        "sensor": "VIIRS",
+        "priority_score": 2130,
+        "reco": "SOL + AÉRIEN (forêt domaniale, 185k hab à 30km)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.70, 48.41]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 48.1,
+        "commune": "Nemours",
+        "detected_utc": "2026-07-22T14:08:00Z",
+        "sensor": "MODIS",
+        "priority_score": 670,
+        "reco": "SOL + AÉRIEN (sud Seine-et-Marne, vent NE)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.58, 48.35]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "fire",
+        "frp": 22.5,
+        "commune": "Melun",
+        "detected_utc": "2026-07-22T14:15:00Z",
+        "sensor": "VIIRS",
+        "priority_score": 345,
+        "reco": "SOL (feu modéré, zone périurbaine)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.82, 48.48]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "aircraft",
+        "callsign": "PELICAN44",
+        "role": "Canadair CL-415",
+        "altitude_m": 920,
+        "status": "en route",
+        "assigned_to": "Fontainebleau"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.45, 48.30]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "unit",
+        "unit_id": "SDIS77-CCF-101",
+        "status": "available",
+        "base": "Fontainebleau",
+        "type": "Camion Citerne Feux de Forêt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.6985, 48.4065]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "layer": "unit",
+        "unit_id": "SDIS77-GRIMP-03",
+        "status": "engaged",
+        "base": "Melun",
+        "type": "Groupe d'intervention"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.66, 48.54]
       }
     }
   ]

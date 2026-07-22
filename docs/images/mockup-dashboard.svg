@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="header-bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <filter id="card-shadow" x="-3%" y="-3%" width="106%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="480" fill="#0f0f23" rx="12"/>
+
+  <!-- Header -->
+  <rect width="900" height="50" fill="url(#header-bg)" rx="12"/>
+  <rect y="12" width="900" height="38" fill="url(#header-bg)"/>
+  <text x="20" y="33" fill="#ff6b6b" font-size="18" font-weight="bold">📊</text>
+  <text x="45" y="33" fill="white" font-size="15" font-weight="600">Dashboard_Wildfire — Real-Time Dispatch Priorities</text>
+  <circle cx="830" cy="25" r="5" fill="#2ecc71"/>
+  <text x="842" y="29" fill="#95a5a6" font-size="10">Live</text>
+
+  <!-- KPI Cards row -->
+  <!-- Active Fires -->
+  <rect x="20" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+  <text x="35" y="88" fill="#95a5a6" font-size="11" font-weight="500">ACTIVE FIRE ZONES</text>
+  <text x="35" y="125" fill="#e74c3c" font-size="38" font-weight="bold">8</text>
+  <text x="80" y="125" fill="#c0392b" font-size="14">▲ 3 new</text>
+
+  <!-- Total FRP -->
+  <rect x="240" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+  <text x="255" y="88" fill="#95a5a6" font-size="11" font-weight="500">TOTAL FRP (MW)</text>
+  <text x="255" y="125" fill="#f39c12" font-size="38" font-weight="bold">2,710</text>
+
+  <!-- Population at Risk -->
+  <rect x="460" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+  <text x="475" y="88" fill="#95a5a6" font-size="11" font-weight="500">POPULATION AT RISK</text>
+  <text x="475" y="125" fill="#3498db" font-size="38" font-weight="bold">609K</text>
+
+  <!-- Aircraft Deployed -->
+  <rect x="680" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+  <text x="695" y="88" fill="#95a5a6" font-size="11" font-weight="500">AIRCRAFT DEPLOYED</text>
+  <text x="695" y="125" fill="#2ecc71" font-size="38" font-weight="bold">4</text>
+  <text x="730" y="125" fill="#27ae60" font-size="14">/ 6 avail.</text>
+
+  <!-- Dispatch Table -->
+  <rect x="20" y="160" width="540" height="305" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+  <text x="35" y="185" fill="white" font-size="14" font-weight="600">🎯 Dispatch Priority Table</text>
+
+  <!-- Table header -->
+  <rect x="30" y="195" width="520" height="28" rx="4" fill="#2a2a4a"/>
+  <text x="40" y="214" fill="#95a5a6" font-size="11" font-weight="600">COMMUNE</text>
+  <text x="180" y="214" fill="#95a5a6" font-size="11" font-weight="600">PRIORITY</text>
+  <text x="260" y="214" fill="#95a5a6" font-size="11" font-weight="600">FRP</text>
+  <text x="320" y="214" fill="#95a5a6" font-size="11" font-weight="600">POP 30km</text>
+  <text x="420" y="214" fill="#95a5a6" font-size="11" font-weight="600">ACTION</text>
+
+  <!-- Row 1 - Toulon (critical) -->
+  <rect x="30" y="225" width="520" height="30" rx="0" fill="#3d1515" opacity="0.5"/>
+  <circle cx="42" cy="240" r="4" fill="#e74c3c"/>
+  <text x="52" y="244" fill="#ecf0f1" font-size="12" font-weight="600">Toulon</text>
+  <rect x="175" y="232" width="55" height="18" rx="3" fill="#e74c3c"/>
+  <text x="185" y="245" fill="white" font-size="10" font-weight="bold">2,490</text>
+  <text x="260" y="244" fill="#e0e0e0" font-size="12">340</text>
+  <text x="320" y="244" fill="#e0e0e0" font-size="12">215,000</text>
+  <rect x="415" y="232" width="100" height="18" rx="3" fill="#c0392b" opacity="0.8"/>
+  <text x="425" y="245" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+
+  <!-- Row 2 - Fontainebleau -->
+  <rect x="30" y="257" width="520" height="30" rx="0" fill="#3d2015" opacity="0.3"/>
+  <circle cx="42" cy="272" r="4" fill="#e67e22"/>
+  <text x="52" y="276" fill="#ecf0f1" font-size="12" font-weight="600">Fontainebleau</text>
+  <rect x="175" y="264" width="55" height="18" rx="3" fill="#e67e22"/>
+  <text x="185" y="277" fill="white" font-size="10" font-weight="bold">2,130</text>
+  <text x="260" y="276" fill="#e0e0e0" font-size="12">280</text>
+  <text x="320" y="276" fill="#e0e0e0" font-size="12">185,000</text>
+  <rect x="415" y="264" width="100" height="18" rx="3" fill="#d35400" opacity="0.8"/>
+  <text x="425" y="277" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+
+  <!-- Row 3 - Bormes -->
+  <rect x="30" y="289" width="520" height="30" rx="0" fill="#3d2015" opacity="0.2"/>
+  <circle cx="42" cy="304" r="4" fill="#e67e22"/>
+  <text x="52" y="308" fill="#ecf0f1" font-size="12">Bormes-les-Mimosas</text>
+  <rect x="175" y="296" width="55" height="18" rx="3" fill="#e67e22"/>
+  <text x="185" y="309" fill="white" font-size="10" font-weight="bold">1,864</text>
+  <text x="260" y="308" fill="#e0e0e0" font-size="12">1,110</text>
+  <text x="320" y="308" fill="#e0e0e0" font-size="12">75,400</text>
+  <rect x="415" y="296" width="100" height="18" rx="3" fill="#d35400" opacity="0.8"/>
+  <text x="425" y="309" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+
+  <!-- Row 4 - Fréjus -->
+  <circle cx="42" cy="336" r="4" fill="#f39c12"/>
+  <text x="52" y="340" fill="#ecf0f1" font-size="12">Fréjus</text>
+  <text x="185" y="340" fill="#f39c12" font-size="12" font-weight="600">1,140</text>
+  <text x="260" y="340" fill="#e0e0e0" font-size="12">720</text>
+  <text x="320" y="340" fill="#e0e0e0" font-size="12">42,000</text>
+  <rect x="415" y="327" width="100" height="18" rx="3" fill="#e67e22" opacity="0.6"/>
+  <text x="425" y="340" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+
+  <!-- Row 5 - Nemours -->
+  <circle cx="42" cy="363" r="4" fill="#f39c12"/>
+  <text x="52" y="367" fill="#bbb" font-size="12">Nemours</text>
+  <text x="185" y="367" fill="#f39c12" font-size="12">670</text>
+  <text x="260" y="367" fill="#bbb" font-size="12">150</text>
+  <text x="320" y="367" fill="#bbb" font-size="12">52,000</text>
+  <rect x="415" y="354" width="100" height="18" rx="3" fill="#e67e22" opacity="0.4"/>
+  <text x="425" y="367" fill="white" font-size="10">SOL + AÉRIEN</text>
+
+  <!-- Row 6 - Melun -->
+  <circle cx="42" cy="390" r="4" fill="#2ecc71"/>
+  <text x="52" y="394" fill="#888" font-size="12">Melun</text>
+  <text x="185" y="394" fill="#2ecc71" font-size="12">345</text>
+  <text x="260" y="394" fill="#888" font-size="12">65</text>
+  <text x="320" y="394" fill="#888" font-size="12">28,000</text>
+  <rect x="415" y="381" width="55" height="18" rx="3" fill="#27ae60" opacity="0.5"/>
+  <text x="425" y="394" fill="white" font-size="10">SOL</text>
+
+  <!-- Row 7 - Draguignan -->
+  <circle cx="42" cy="417" r="4" fill="#2ecc71"/>
+  <text x="52" y="421" fill="#888" font-size="12">Draguignan</text>
+  <text x="185" y="421" fill="#2ecc71" font-size="12">180</text>
+  <text x="260" y="421" fill="#888" font-size="12">95</text>
+  <text x="320" y="421" fill="#888" font-size="12">8,500</text>
+  <rect x="415" y="408" width="65" height="18" rx="3" fill="#2980b9" opacity="0.5"/>
+  <text x="425" y="421" fill="white" font-size="10">AÉRIEN</text>
+
+  <!-- Row 8 - Collobrières -->
+  <circle cx="42" cy="444" r="4" fill="#2ecc71"/>
+  <text x="52" y="448" fill="#888" font-size="12">Collobrières</text>
+  <text x="185" y="448" fill="#2ecc71" font-size="12">77</text>
+  <text x="260" y="448" fill="#888" font-size="12">45</text>
+  <text x="320" y="448" fill="#888" font-size="12">3,200</text>
+  <rect x="415" y="435" width="55" height="18" rx="3" fill="#27ae60" opacity="0.5"/>
+  <text x="425" y="448" fill="white" font-size="10">SOL</text>
+
+  <!-- Map tile (right side) -->
+  <rect x="580" y="160" width="300" height="305" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+  <text x="595" y="185" fill="white" font-size="14" font-weight="600">🗺️ Fire Map</text>
+
+  <!-- Mini map background -->
+  <rect x="595" y="195" width="270" height="255" rx="6" fill="#2a3d5c"/>
+
+  <!-- Simplified coast/land -->
+  <path d="M620,250 L660,240 L700,245 L740,235 L780,255 L800,280 L810,320 L790,360 L760,390 L720,410 L680,420 L650,410 L630,380 L620,340 L615,300 Z"
+        fill="#3d5a3d" opacity="0.4" stroke="#4a7a4a" stroke-width="1"/>
+
+  <!-- Fire dots on map -->
+  <circle cx="720" cy="385" r="12" fill="#e74c3c" opacity="0.7"/>
+  <circle cx="700" cy="375" r="8" fill="#e74c3c" opacity="0.6"/>
+  <circle cx="745" cy="370" r="9" fill="#e74c3c" opacity="0.6"/>
+  <circle cx="730" cy="395" r="5" fill="#ff7675" opacity="0.5"/>
+
+  <circle cx="680" cy="280" r="9" fill="#e74c3c" opacity="0.7"/>
+  <circle cx="670" cy="295" r="6" fill="#e74c3c" opacity="0.5"/>
+  <circle cx="690" cy="270" r="4" fill="#ff7675" opacity="0.5"/>
+
+  <!-- Aircraft on map -->
+  <polygon points="755,365 751,371 759,371" fill="#3498db"/>
+  <polygon points="660,270 656,276 664,276" fill="#3498db"/>
+
+  <!-- Labels on map -->
+  <text x="695" y="405" fill="#e74c3c" font-size="9" font-weight="600" opacity="0.9">Var</text>
+  <text x="660" y="265" fill="#e74c3c" font-size="9" font-weight="600" opacity="0.9">Fontainebleau</text>
+
+  <!-- Map legend -->
+  <rect x="600" y="415" width="8" height="8" rx="4" fill="#e74c3c"/>
+  <text x="613" y="423" fill="#95a5a6" font-size="9">Fire</text>
+  <polygon points="648,415 644,423 652,423" fill="#3498db"/>
+  <text x="658" y="423" fill="#95a5a6" font-size="9">Aircraft</text>
+
+  <!-- Timestamp -->
+  <text x="700" y="460" fill="#555" font-size="9" text-anchor="middle">Last refresh: 2 sec ago</text>
+</svg>

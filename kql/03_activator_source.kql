@@ -1,15 +1,16 @@
 // 03 — Source pour Activator: déclenche une alerte quand un foyer devient critique et non couvert.
 // Brancher un objet Activator sur cette requête; règle: priority_score >= 60 ET assigned == false.
+// Note: ref_communes colonnes renommées (commune_lat/commune_lon) pour éviter conflits de jointure.
 let FireZones =
     FireDetections
     | where ingest_ts > ago(1h)
     | extend cell = geo_point_to_s2cell(longitude, latitude, 12)
-    | summarize frp_total = sum(frp), lat = avg(latitude), lon = avg(longitude), last_seen = max(ingest_ts) by cell;
+    | summarize frp_total = sum(frp), fire_lat = avg(latitude), fire_lon = avg(longitude), last_seen = max(ingest_ts) by cell;
 FireZones
 | extend k = 1
-| join kind=leftouter (ref_communes | extend k = 1) on k
-| extend dist_m = geo_distance_2points(lon, lat, todouble(lon1), todouble(lat1))
-| summarize pop_5km = sumif(population, dist_m <= 5000), lat = any(lat), lon = any(lon), frp_total = any(frp_total), last_seen = any(last_seen) by cell
-| extend priority_score = round(frp_total + pop_5km / 100.0, 1)
+| join kind=leftouter (ref_communes | project commune_lat=lat, commune_lon=lon, population | extend k = 1) on k
+| extend dist_m = geo_distance_2points(fire_lon, fire_lat, commune_lon, commune_lat)
+| summarize pop_30km = sumif(population, dist_m <= 30000), fire_lat = any(fire_lat), fire_lon = any(fire_lon), frp_total = any(frp_total), last_seen = any(last_seen) by cell
+| extend priority_score = round(frp_total + pop_30km / 100.0, 1)
 | extend assigned = false   // en prod: jointure sur une table d'affectations
-| project cell, lat, lon, frp_total, pop_5km, priority_score, assigned, last_seen
+| project cell, fire_lat, fire_lon, frp_total, pop_30km, priority_score, assigned, last_seen

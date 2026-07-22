@@ -113,7 +113,9 @@ fabric-wildfire-demo/
 ├── docs/
 │   ├── BUILD_GUIDE.md                  # step-by-step, phases 0 → 7
 │   ├── ARCHITECTURE.md                 # medallion, ontology, geospatial, alerting
-│   └── DEMO_SCRIPT.md                  # the ~8-minute on-stage walkthrough
+│   ├── DEMO_GUIDE.md                   # 🎬 12-min demo scenario (Var + Fontainebleau)
+│   ├── DEMO_SCRIPT.md                  # the ~8-minute on-stage walkthrough
+│   └── Ontology_Wildfire.pptx          # 6-slide ontology visual deck
 └── map/
     ├── index.html                      # companion Leaflet map (zooms to the fire)
     └── sample_snapshot.geojson         # demo data for the map
@@ -124,6 +126,8 @@ fabric-wildfire-demo/
 ## Setup / how to build
 
 Follow **[`docs/BUILD_GUIDE.md`](docs/BUILD_GUIDE.md)** for the full, numbered walkthrough. It is organised in the same phases the demo was built in:
+
+> 🎬 **For the ready-to-use demo scenario (12 min, Var + Fontainebleau), see [`docs/DEMO_GUIDE.md`](docs/DEMO_GUIDE.md)**
 
 - **Phase 0 — Socle:** capacity, workspace, and the three keys (FIRMS `MAP_KEY`, OpenSky OAuth2, Azure Maps).
 - **Phase 1 — Feux:** FIRMS ingestion notebook → Eventhouse; first map.
@@ -164,6 +168,52 @@ You can author most of the *code* assets locally and let Fabric’s Git integrat
 - **Simulated feeds are labeled.** Firefighter/**SDIS** units have no public real-time API and are **simulated**. Aircraft may also be simulated when the live feed is sparse. Every simulated element is disclosed in the UI and data.
 - **Digital Twin Builder is in preview.** The ontology layer (Fabric IQ) is a **preview** capability; behaviour and APIs may change.
 - **Not operational.** This is a **demo/sample**. It is not a certified dispatch tool and must not be used for real emergency decisions.
+
+---
+
+## What it looks like
+
+### 🗺️ Companion Leaflet Map
+
+Interactive map showing fires (red circles sized by FRP), aircraft (blue triangles), and SDIS ground units (green squares). One-click zoom to Var or Fontainebleau, plus a **Simulate alert** button.
+
+![Wildfire Map Mockup](docs/images/mockup-map.svg)
+
+### 📊 Real-Time Dashboard
+
+Dark-themed Fabric Real-Time Dashboard with KPI cards, dispatch priority table, and Azure Maps tile — all powered by live KQL queries against the Eventhouse.
+
+![Dashboard Mockup](docs/images/mockup-dashboard.svg)
+
+### 🤖 AI Skill (Data Agent)
+
+Ask natural language questions grounded on the KQL DispatchResults table. The agent returns structured answers with priority scores, population data, and recommendations.
+
+![AI Skill Mockup](docs/images/mockup-ai-skill.svg)
+
+### 🧬 Ontology (Fabric IQ / Digital Twin Builder)
+
+```mermaid
+graph TD
+    FZ["🔥 FireZone\ncell · frp · priority_score"]
+    C["🏘️ Commune\nname · population · lat/lon"]
+    A["✈️ Aircraft\ncallsign · role · status"]
+    U["🚒 FirefighterUnit\nunit_id · base · status"]
+    CI["🏥 CriticalInfra\nname · type · lat/lon"]
+
+    FZ -->|THREATENS| C
+    FZ -->|ASSIGNED_TO| A
+    FZ -->|COVERS| U
+    FZ -->|NEAR| CI
+
+    style FZ fill:#B85042,color:#fff
+    style C fill:#A7BEAE,color:#fff
+    style A fill:#2F6FED,color:#fff
+    style U fill:#2F9E44,color:#fff
+    style CI fill:#868E96,color:#fff
+```
+
+---
 
 ## License
 
