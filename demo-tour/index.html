@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔥 Fabric Wildfire Response — Guided Demo Tour</title>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ── Slide container ── */
+.slides-wrapper {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100vh;
+  width: 900vw; /* 9 slides */
+}
+.slide {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 60px;
+  position: relative;
+}
+
+/* ── Title slide ── */
+.slide-title {
+  background: linear-gradient(135deg, var(--cp-surface) 0%, var(--cp-bg-elevated) 100%);
+}
+.slide-title h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--cp-accent);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.slide-title .subtitle {
+  font-size: 1.3rem;
+  color: var(--cp-text-muted);
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.6;
+}
+.slide-title .meta {
+  margin-top: 32px;
+  font-size: 0.95rem;
+  color: var(--cp-text-soft);
+  text-align: center;
+}
+
+/* ── Content slides ── */
+.slide-content { gap: 20px; }
+.slide-content .act-header {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.slide-content .act-header .act-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cp-accent);
+  font-weight: 700;
+}
+.slide-content .act-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--cp-text);
+  margin-top: 4px;
+}
+
+.mockup-container {
+  width: 100%;
+  max-width: 820px;
+  border-radius: 0.625rem;
+  overflow: hidden;
+  border: 1px solid var(--cp-border);
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+}
+.mockup-container svg { display: block; width: 100%; height: auto; }
+
+/* Narrator box */
+.narrator {
+  max-width: 820px;
+  width: 100%;
+  background: var(--cp-accent-soft);
+  border-left: 4px solid var(--cp-accent);
+  border-radius: 0 0.625rem 0.625rem 0;
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--cp-text);
+  font-style: italic;
+}
+.narrator strong { font-style: normal; color: var(--cp-accent); }
+
+/* Key points list */
+.key-points {
+  max-width: 820px;
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.key-point {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  padding: 14px 20px;
+  flex: 1 1 200px;
+  max-width: 260px;
+  font-size: 0.9rem;
+  color: var(--cp-text-muted);
+}
+.key-point .emoji { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+.key-point .label { font-weight: 600; color: var(--cp-text); display: block; margin-bottom: 4px; }
+
+/* ── Architecture slide ── */
+.arch-diagram {
+  max-width: 820px;
+  width: 100%;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  padding: 30px 20px;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--cp-text);
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+}
+
+/* ── Conclusion slide ── */
+.slide-conclusion {
+  background: linear-gradient(135deg, var(--cp-surface) 0%, var(--cp-bg-elevated) 100%);
+  text-align: center;
+}
+.slide-conclusion h2 {
+  font-size: 2.2rem;
+  color: var(--cp-accent);
+  margin-bottom: 20px;
+}
+.slide-conclusion .takeaway {
+  font-size: 1.15rem;
+  color: var(--cp-text-muted);
+  max-width: 650px;
+  line-height: 1.7;
+}
+.pillars {
+  display: flex;
+  gap: 20px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pillar {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  padding: 20px;
+  width: 140px;
+  text-align: center;
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+}
+.pillar .icon { font-size: 2rem; }
+.pillar .plabel { font-size: 0.85rem; font-weight: 600; color: var(--cp-text); margin-top: 8px; }
+
+/* ── Progress bar ── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--cp-accent);
+  transition: width 0.5s ease;
+  z-index: 100;
+}
+
+/* ── Navigation ── */
+.nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--cp-panel-strong);
+  border-top: 1px solid var(--cp-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+}
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--cp-border);
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+.nav-dot.active { background: var(--cp-accent); transform: scale(1.3); }
+.nav-btn {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cp-text);
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--cp-accent-soft); border-color: var(--cp-accent); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.slide-counter {
+  font-size: 0.8rem;
+  color: var(--cp-text-muted);
+  min-width: 60px;
+  text-align: center;
+}
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  position: fixed;
+  top: 12px; right: 16px;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--cp-accent); }
+
+/* Ontology entity cards */
+.ontology-cards {
+  max-width: 820px;
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ont-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  padding: 12px 16px;
+  flex: 1 1 145px;
+  max-width: 160px;
+  text-align: center;
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+}
+.ont-card .oicon { font-size: 1.6rem; }
+.ont-card .oname { font-size: 0.8rem; font-weight: 700; color: var(--cp-text); margin-top: 4px; }
+.ont-card .odesc { font-size: 0.7rem; color: var(--cp-text-muted); margin-top: 2px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slide { padding: 20px; }
+  .slide-title h1 { font-size: 1.8rem; }
+  .slide-content .act-header h2 { font-size: 1.3rem; }
+  .narrator { font-size: 0.85rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<button class="theme-toggle" id="themeBtn" title="Toggle theme">🌓</button>
+
+<div class="slides-wrapper" id="slidesWrapper">
+
+  <!-- ══════════════ SLIDE 0 — Title ══════════════ -->
+  <div class="slide slide-title">
+    <h1>🔥 Fabric Wildfire Response</h1>
+    <div class="subtitle">
+      How Microsoft Fabric unifies <strong>satellite data, AI, and field coordination</strong> for wildfire response in France — in a single workspace.
+    </div>
+    <div class="key-points" style="margin-top:32px">
+      <div class="key-point"><span class="emoji">🛰️</span><span class="label">Real-time ingestion</span>NASA FIRMS satellite data every 10 min</div>
+      <div class="key-point"><span class="emoji">🧠</span><span class="label">Semantic ontology</span>Fabric IQ links fires, people, assets</div>
+      <div class="key-point"><span class="emoji">📊</span><span class="label">KQL dispatch</span>Priority scoring with population at risk</div>
+      <div class="key-point"><span class="emoji">🤖</span><span class="label">AI agent</span>Natural language queries for coordinators</div>
+    </div>
+    <div class="meta">12-minute guided demo · 5 acts · Use ← → or Space to navigate</div>
+  </div>
+
+  <!-- ══════════════ SLIDE 1 — Architecture ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Overview</div>
+      <h2>Architecture</h2>
+    </div>
+    <div class="arch-diagram">
+┌─────────────────┐     ┌──────────────────┐     ┌───────────────────┐
+│  NASA FIRMS API │────▶│  Eventstream     │────▶│  Eventhouse (KQL) │
+│  (satellites)   │     │  ES_Wildfire     │     │  EH_Wildfire      │
+└─────────────────┘     └──────────────────┘     └─────────┬─────────┘
+                                                           │
+                        ┌──────────────────────────────────┼────────────────┐
+                        │                                  │                │
+                        ▼                                  ▼                ▼
+              ┌─────────────────┐              ┌────────────────┐  ┌────────────────┐
+              │   Activator     │              │  RT Dashboard  │  │   AI Skill     │
+              │  → Teams alert  │              │  (Azure Maps)  │  │ Agent_Wildfire │
+              └─────────────────┘              └────────────────┘  └────────────────┘
+                        │
+                        ▼
+              ┌─────────────────┐
+              │   Leaflet Map   │
+              │   (companion)   │
+              └─────────────────┘</div>
+    <div class="narrator">
+      <strong>Narrator:</strong> "Everything runs on ONE platform — Microsoft Fabric. From satellite ingestion to AI-powered dispatch recommendations, in a single workspace."
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 2 — Act 1: The Problem ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Act 1 — 2 min</div>
+      <h2>🔥 The Problem</h2>
+    </div>
+    <div class="mockup-container" id="mockup-map">
+      <!-- Map SVG embedded inline -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Segoe UI, Arial, sans-serif">
+        <defs>
+          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c9dff0"/>
+            <stop offset="100%" stop-color="#a3c4e0"/>
+          </linearGradient>
+          <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+          </filter>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <rect width="900" height="520" fill="url(#sea)" rx="12"/>
+        <rect width="900" height="48" fill="#1a1a2e" rx="12"/>
+        <rect y="12" width="900" height="36" fill="#1a1a2e"/>
+        <text x="20" y="31" fill="#ff6b6b" font-size="20" font-weight="bold">🔥</text>
+        <text x="45" y="31" fill="white" font-size="16" font-weight="600">Fabric Wildfire Response — Live Map</text>
+        <rect x="780" y="10" width="90" height="28" rx="4" fill="#e74c3c" opacity="0.9"/>
+        <text x="800" y="29" fill="white" font-size="11" font-weight="600">⚡ LIVE</text>
+        <path d="M626,202 L620,209 L602,221 L590,243 L592,247 L607,240 L618,249 L617,259 L621,269 L624,280 L610,286 L622,295 L618,306 L627,315 L645,316 L640,327 L630,333 L619,340 L607,347 L603,351 L590,355 L582,353 L574,351 L562,348 L554,345 L543,342 L528,341 L494,347 L478,368 L479,374 L462,379 L443,378 L430,369 L414,366 L395,361 L380,367 L363,363 L346,362 L327,356 L319,348 L307,343 L319,324 L328,300 L326,297 L327,276 L324,262 L330,252 L322,242 L302,234 L294,216 L281,210 L278,204 L276,200 L272,202 L267,201 L271,198 L266,198 L262,199 L257,199 L253,196 L254,194 L249,195 L246,191 L241,190 L235,191 L227,189 L220,187 L217,189 L211,189 L198,183 L213,182 L204,177 L206,175 L217,176 L214,173 L214,170 L196,173 L197,167 L203,165 L209,163 L221,161 L227,162 L235,161 L242,157 L253,157 L257,159 L265,162 L277,165 L288,163 L295,164 L296,164 L305,164 L311,157 L311,148 L303,138 L303,127 L323,128 L340,139 L378,135 L393,121 L429,110 L425,93 L444,82 L463,86 L478,90 L490,99 L502,105 L518,107 L519,116 L538,114 L545,119 L558,127 L573,132 L589,135 L605,137 L617,143 L636,145 L657,150 L650,168 L642,200 L629,202 Z" fill="#e8e4c9" stroke="#b0a990" stroke-width="2" filter="url(#shadow)"/>
+        <path d="M708,396 L707,402 L704,405 L704,407 L702,411 L699,412 L696,410 L693,408 L687,406 L688,403 L686,400 L683,398 L687,394 L680,393 L684,389 L679,386 L678,383 L682,381 L679,379 L680,377 L682,373 L685,371 L690,369 L696,367 L703,367 L705,362 L706,356 L711,359 L710,367 L713,379 L709,393 Z" fill="#e8e4c9" stroke="#b0a990" stroke-width="1.5"/>
+        <text x="370" y="58" fill="#7899b5" font-size="10" opacity="0.6">ENGLISH CHANNEL</text>
+        <text x="700" y="155" fill="#7899b5" font-size="9" opacity="0.5">GERMANY</text>
+        <text x="680" y="250" fill="#7899b5" font-size="9" opacity="0.5">SWITZERLAND</text>
+        <text x="720" y="410" fill="#7899b5" font-size="9" opacity="0.5">ITALY</text>
+        <text x="380" y="410" fill="#7899b5" font-size="9" opacity="0.5">SPAIN</text>
+        <text x="120" y="260" fill="#7899b5" font-size="10" opacity="0.5">ATLANTIC</text>
+        <text x="120" y="275" fill="#7899b5" font-size="10" opacity="0.5">OCEAN</text>
+        <text x="530" y="420" fill="#7899b5" font-size="9" opacity="0.5">MEDITERRANEAN</text>
+        <circle cx="454" cy="156" r="3" fill="#999" opacity="0.4"/>
+        <text x="462" y="160" fill="#888" font-size="8" opacity="0.5">Paris</text>
+        <circle cx="543" cy="262" r="2" fill="#999" opacity="0.3"/>
+        <text x="550" y="266" fill="#888" font-size="7" opacity="0.4">Lyon</text>
+        <circle cx="348" cy="293" r="2" fill="#999" opacity="0.3"/>
+        <text x="330" y="290" fill="#888" font-size="7" opacity="0.4">Bordeaux</text>
+        <circle cx="649" cy="165" r="2" fill="#999" opacity="0.3"/>
+        <text x="655" y="169" fill="#888" font-size="7" opacity="0.4">Strasbourg</text>
+        <circle cx="590" cy="350" r="45" fill="#e74c3c" opacity="0.10" filter="url(#glow)"/>
+        <circle cx="598" cy="351" r="18" fill="#e74c3c" opacity="0.85" stroke="#c0392b" stroke-width="2"/>
+        <text x="598" y="356" text-anchor="middle" fill="white" font-size="10" font-weight="bold">1110</text>
+        <circle cx="583" cy="352" r="13" fill="#e74c3c" opacity="0.8" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="583" y="356" text-anchor="middle" fill="white" font-size="9" font-weight="bold">340</text>
+        <circle cx="612" cy="342" r="14" fill="#e74c3c" opacity="0.8" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="612" y="346" text-anchor="middle" fill="white" font-size="9" font-weight="bold">720</text>
+        <circle cx="592" cy="362" r="7" fill="#ff7675" opacity="0.8" stroke="#d63031" stroke-width="1"/>
+        <polygon points="635,338 629,348 641,348" fill="#2980b9" stroke="#1a5276" stroke-width="1.5"/>
+        <text x="645" y="346" fill="#2980b9" font-size="10" font-weight="600">DRAGON83</text>
+        <polygon points="560,342 554,352 566,352" fill="#2980b9" stroke="#1a5276" stroke-width="1.5"/>
+        <text x="530" y="338" fill="#2980b9" font-size="10" font-weight="600">PELICAN32</text>
+        <rect x="580" y="370" width="10" height="10" fill="#27ae60" stroke="#1e8449" stroke-width="1" rx="2"/>
+        <text x="595" y="379" fill="#27ae60" font-size="9" font-weight="600">SDIS83</text>
+        <rect x="610" y="370" width="10" height="10" fill="#27ae60" stroke="#1e8449" stroke-width="1" rx="2"/>
+        <rect x="565" y="365" width="10" height="10" fill="#555" stroke="#333" stroke-width="1" rx="2"/>
+        <text x="548" y="373" fill="#555" font-size="8">Engaged</text>
+        <rect x="570" y="388" width="70" height="20" rx="4" fill="#2c3e50" opacity="0.85"/>
+        <text x="605" y="402" text-anchor="middle" fill="white" font-size="10" font-weight="600">📍 Var</text>
+        <circle cx="466" cy="171" r="32" fill="#e74c3c" opacity="0.10" filter="url(#glow)"/>
+        <circle cx="466" cy="171" r="14" fill="#e74c3c" opacity="0.85" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="466" y="175" text-anchor="middle" fill="white" font-size="9" font-weight="bold">280</text>
+        <circle cx="455" cy="185" r="10" fill="#e74c3c" opacity="0.75" stroke="#c0392b" stroke-width="1"/>
+        <text x="455" y="189" text-anchor="middle" fill="white" font-size="8" font-weight="bold">150</text>
+        <circle cx="475" cy="160" r="7" fill="#ff7675" opacity="0.7" stroke="#d63031" stroke-width="1"/>
+        <polygon points="492,165 486,175 498,175" fill="#2980b9" stroke="#1a5276" stroke-width="1.5"/>
+        <text x="502" y="173" fill="#2980b9" font-size="10" font-weight="600">PELICAN44</text>
+        <rect x="442" y="198" width="10" height="10" fill="#27ae60" stroke="#1e8449" stroke-width="1" rx="2"/>
+        <text x="457" y="207" fill="#27ae60" font-size="9" font-weight="600">SDIS77</text>
+        <rect x="425" y="215" width="110" height="20" rx="4" fill="#2c3e50" opacity="0.85"/>
+        <text x="480" y="229" text-anchor="middle" fill="white" font-size="10" font-weight="600">📍 Fontainebleau</text>
+        <rect x="20" y="60" width="155" height="140" rx="8" fill="white" opacity="0.92" filter="url(#shadow)"/>
+        <text x="32" y="80" fill="#2c3e50" font-size="12" font-weight="bold">Legend</text>
+        <line x1="32" y1="86" x2="160" y2="86" stroke="#eee" stroke-width="1"/>
+        <circle cx="40" cy="102" r="6" fill="#e74c3c" opacity="0.8"/>
+        <text x="52" y="106" fill="#333" font-size="10">Fire (size = FRP)</text>
+        <polygon points="40,118 35,127 45,127" fill="#2980b9"/>
+        <text x="52" y="126" fill="#333" font-size="10">Aircraft</text>
+        <rect x="35" y="137" width="9" height="9" fill="#27ae60" rx="2"/>
+        <text x="52" y="146" fill="#333" font-size="10">SDIS unit (free)</text>
+        <rect x="35" y="155" width="9" height="9" fill="#555" rx="2"/>
+        <text x="52" y="164" fill="#333" font-size="10">SDIS (engaged)</text>
+        <circle cx="40" cy="182" r="5" fill="#e74c3c" opacity="0.12"/>
+        <circle cx="40" cy="182" r="2.5" fill="#e74c3c" opacity="0.4"/>
+        <text x="52" y="186" fill="#333" font-size="10">Threat radius</text>
+        <rect x="20" y="468" width="140" height="32" rx="6" fill="#e74c3c" filter="url(#shadow)"/>
+        <text x="90" y="489" text-anchor="middle" fill="white" font-size="12" font-weight="600">🔥 Simulate alert</text>
+        <rect x="175" y="468" width="105" height="32" rx="6" fill="#3498db" filter="url(#shadow)"/>
+        <text x="227" y="489" text-anchor="middle" fill="white" font-size="12" font-weight="600">📍 Zoom Var</text>
+        <rect x="295" y="468" width="158" height="32" rx="6" fill="#3498db" filter="url(#shadow)"/>
+        <text x="374" y="489" text-anchor="middle" fill="white" font-size="12" font-weight="600">📍 Zoom Fontainebleau</text>
+        <text x="780" y="500" fill="#7f8c8d" font-size="10">46.5°N — 2.5°E</text>
+        <text x="830" y="485" fill="#95a5a6" font-size="9">zoom: 6</text>
+        <text x="20" y="512" fill="#aaa" font-size="9">© OpenStreetMap contributors · Leaflet</text>
+      </svg>
+    </div>
+    <div class="narrator">
+      <strong>Narrator:</strong> "Every summer France faces increasingly intense wildfires. SDIS fire departments must decide in minutes: send ground crews, air tankers, or both. Today we show them how Fabric helps."
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 3 — Act 2: The Ontology ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Act 2 — 1 min 30</div>
+      <h2>🧠 The Ontology</h2>
+    </div>
+    <div class="ontology-cards">
+      <div class="ont-card"><span class="oicon">🔥</span><span class="oname">FireZone</span><span class="odesc">Cluster of satellite detections</span></div>
+      <div class="ont-card"><span class="oicon">🏘️</span><span class="oname">Commune</span><span class="odesc">Municipality at risk</span></div>
+      <div class="ont-card"><span class="oicon">✈️</span><span class="oname">Aircraft</span><span class="odesc">Canadair, DASH, Heli</span></div>
+      <div class="ont-card"><span class="oicon">🚒</span><span class="oname">FirefighterUnit</span><span class="odesc">SDIS ground crews</span></div>
+      <div class="ont-card"><span class="oicon">⚡</span><span class="oname">CriticalInfra</span><span class="odesc">Hospitals, power plants</span></div>
+    </div>
+    <div style="max-width:820px;width:100%;background:var(--cp-surface);border:1px solid var(--cp-border);border-radius:0.625rem;padding:24px 30px;margin-top:8px;box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);">
+      <div style="text-align:center;margin-bottom:16px;font-weight:700;color:var(--cp-text)">Relationships</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:0.85rem;color:var(--cp-text-muted)">
+        <span style="background:var(--cp-accent-soft);padding:6px 14px;border-radius:20px">🔥 FireZone <strong style="color:var(--cp-accent)">→ THREATENS →</strong> 🏘️ Commune</span>
+        <span style="background:var(--cp-accent-soft);padding:6px 14px;border-radius:20px">✈️ Aircraft <strong style="color:var(--cp-accent)">→ ASSIGNED_TO →</strong> 🔥 FireZone</span>
+        <span style="background:var(--cp-accent-soft);padding:6px 14px;border-radius:20px">🚒 SDIS <strong style="color:var(--cp-accent)">→ COVERS →</strong> 🏘️ Commune</span>
+        <span style="background:var(--cp-accent-soft);padding:6px 14px;border-radius:20px">🏘️ Commune <strong style="color:var(--cp-accent)">→ HOSTS →</strong> ⚡ CriticalInfra</span>
+      </div>
+    </div>
+    <div class="narrator">
+      <strong>Narrator:</strong> "Fabric IQ links the four silos into a single semantic model. A fire zone now 'knows' which towns it threatens, which assets cover it, and which critical infrastructure is nearby."
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 4 — Act 3: The Intelligence ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Act 3 — 3 min</div>
+      <h2>📊 The Intelligence</h2>
+    </div>
+    <div class="mockup-container">
+      <!-- Dashboard SVG embedded inline -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Segoe UI, Arial, sans-serif">
+        <defs>
+          <linearGradient id="header-bg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a1a2e"/>
+            <stop offset="100%" stop-color="#16213e"/>
+          </linearGradient>
+          <filter id="card-shadow" x="-3%" y="-3%" width="106%" height="112%">
+            <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.12"/>
+          </filter>
+        </defs>
+        <rect width="900" height="480" fill="#0f0f23" rx="12"/>
+        <rect width="900" height="50" fill="url(#header-bg)" rx="12"/>
+        <rect y="12" width="900" height="38" fill="url(#header-bg)"/>
+        <text x="20" y="33" fill="#ff6b6b" font-size="18" font-weight="bold">📊</text>
+        <text x="45" y="33" fill="white" font-size="15" font-weight="600">Dashboard_Wildfire — Real-Time Dispatch Priorities</text>
+        <circle cx="830" cy="25" r="5" fill="#2ecc71"/>
+        <text x="842" y="29" fill="#95a5a6" font-size="10">Live</text>
+        <rect x="20" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+        <text x="35" y="88" fill="#95a5a6" font-size="11" font-weight="500">ACTIVE FIRE ZONES</text>
+        <text x="35" y="125" fill="#e74c3c" font-size="38" font-weight="bold">8</text>
+        <text x="80" y="125" fill="#c0392b" font-size="14">▲ 3 new</text>
+        <rect x="240" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+        <text x="255" y="88" fill="#95a5a6" font-size="11" font-weight="500">TOTAL FRP (MW)</text>
+        <text x="255" y="125" fill="#f39c12" font-size="38" font-weight="bold">2,710</text>
+        <rect x="460" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+        <text x="475" y="88" fill="#95a5a6" font-size="11" font-weight="500">POPULATION AT RISK</text>
+        <text x="475" y="125" fill="#3498db" font-size="38" font-weight="bold">609K</text>
+        <rect x="680" y="65" width="200" height="80" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+        <text x="695" y="88" fill="#95a5a6" font-size="11" font-weight="500">AIRCRAFT DEPLOYED</text>
+        <text x="695" y="125" fill="#2ecc71" font-size="38" font-weight="bold">4</text>
+        <text x="730" y="125" fill="#27ae60" font-size="14">/ 6 avail.</text>
+        <rect x="20" y="160" width="540" height="305" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+        <text x="35" y="185" fill="white" font-size="14" font-weight="600">🎯 Dispatch Priority Table</text>
+        <rect x="30" y="195" width="520" height="28" rx="4" fill="#2a2a4a"/>
+        <text x="40" y="214" fill="#95a5a6" font-size="11" font-weight="600">COMMUNE</text>
+        <text x="180" y="214" fill="#95a5a6" font-size="11" font-weight="600">PRIORITY</text>
+        <text x="260" y="214" fill="#95a5a6" font-size="11" font-weight="600">FRP</text>
+        <text x="320" y="214" fill="#95a5a6" font-size="11" font-weight="600">POP 30km</text>
+        <text x="420" y="214" fill="#95a5a6" font-size="11" font-weight="600">ACTION</text>
+        <rect x="30" y="225" width="520" height="30" rx="0" fill="#3d1515" opacity="0.5"/>
+        <circle cx="42" cy="240" r="4" fill="#e74c3c"/>
+        <text x="52" y="244" fill="#ecf0f1" font-size="12" font-weight="600">Toulon</text>
+        <rect x="175" y="232" width="55" height="18" rx="3" fill="#e74c3c"/>
+        <text x="185" y="245" fill="white" font-size="10" font-weight="bold">2,490</text>
+        <text x="260" y="244" fill="#e0e0e0" font-size="12">340</text>
+        <text x="320" y="244" fill="#e0e0e0" font-size="12">215,000</text>
+        <rect x="415" y="232" width="100" height="18" rx="3" fill="#c0392b" opacity="0.8"/>
+        <text x="425" y="245" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+        <rect x="30" y="257" width="520" height="30" rx="0" fill="#3d2015" opacity="0.3"/>
+        <circle cx="42" cy="272" r="4" fill="#e67e22"/>
+        <text x="52" y="276" fill="#ecf0f1" font-size="12" font-weight="600">Fontainebleau</text>
+        <rect x="175" y="264" width="55" height="18" rx="3" fill="#e67e22"/>
+        <text x="185" y="277" fill="white" font-size="10" font-weight="bold">2,130</text>
+        <text x="260" y="276" fill="#e0e0e0" font-size="12">280</text>
+        <text x="320" y="276" fill="#e0e0e0" font-size="12">185,000</text>
+        <rect x="415" y="264" width="100" height="18" rx="3" fill="#d35400" opacity="0.8"/>
+        <text x="425" y="277" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+        <rect x="30" y="289" width="520" height="30" rx="0" fill="#3d2015" opacity="0.2"/>
+        <circle cx="42" cy="304" r="4" fill="#e67e22"/>
+        <text x="52" y="308" fill="#ecf0f1" font-size="12">Bormes-les-Mimosas</text>
+        <rect x="175" y="296" width="55" height="18" rx="3" fill="#e67e22"/>
+        <text x="185" y="309" fill="white" font-size="10" font-weight="bold">1,864</text>
+        <text x="260" y="308" fill="#e0e0e0" font-size="12">1,110</text>
+        <text x="320" y="308" fill="#e0e0e0" font-size="12">75,400</text>
+        <rect x="415" y="296" width="100" height="18" rx="3" fill="#d35400" opacity="0.8"/>
+        <text x="425" y="309" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+        <circle cx="42" cy="336" r="4" fill="#f39c12"/>
+        <text x="52" y="340" fill="#ecf0f1" font-size="12">Fréjus</text>
+        <text x="185" y="340" fill="#f39c12" font-size="12" font-weight="600">1,140</text>
+        <text x="260" y="340" fill="#e0e0e0" font-size="12">720</text>
+        <text x="320" y="340" fill="#e0e0e0" font-size="12">42,000</text>
+        <rect x="415" y="327" width="100" height="18" rx="3" fill="#e67e22" opacity="0.6"/>
+        <text x="425" y="340" fill="white" font-size="10" font-weight="600">SOL + AÉRIEN</text>
+        <circle cx="42" cy="363" r="4" fill="#f39c12"/>
+        <text x="52" y="367" fill="#bbb" font-size="12">Nemours</text>
+        <text x="185" y="367" fill="#f39c12" font-size="12">670</text>
+        <text x="260" y="367" fill="#bbb" font-size="12">150</text>
+        <text x="320" y="367" fill="#bbb" font-size="12">52,000</text>
+        <rect x="415" y="354" width="100" height="18" rx="3" fill="#e67e22" opacity="0.4"/>
+        <text x="425" y="367" fill="white" font-size="10">SOL + AÉRIEN</text>
+        <circle cx="42" cy="390" r="4" fill="#2ecc71"/>
+        <text x="52" y="394" fill="#888" font-size="12">Melun</text>
+        <text x="185" y="394" fill="#2ecc71" font-size="12">345</text>
+        <text x="260" y="394" fill="#888" font-size="12">65</text>
+        <text x="320" y="394" fill="#888" font-size="12">28,000</text>
+        <rect x="415" y="381" width="55" height="18" rx="3" fill="#27ae60" opacity="0.5"/>
+        <text x="425" y="394" fill="white" font-size="10">SOL</text>
+        <circle cx="42" cy="417" r="4" fill="#2ecc71"/>
+        <text x="52" y="421" fill="#888" font-size="12">Draguignan</text>
+        <text x="185" y="421" fill="#2ecc71" font-size="12">180</text>
+        <text x="260" y="421" fill="#888" font-size="12">95</text>
+        <text x="320" y="421" fill="#888" font-size="12">8,500</text>
+        <rect x="415" y="408" width="65" height="18" rx="3" fill="#2980b9" opacity="0.5"/>
+        <text x="425" y="421" fill="white" font-size="10">AÉRIEN</text>
+        <circle cx="42" cy="444" r="4" fill="#2ecc71"/>
+        <text x="52" y="448" fill="#888" font-size="12">Collobrières</text>
+        <text x="185" y="448" fill="#2ecc71" font-size="12">77</text>
+        <text x="260" y="448" fill="#888" font-size="12">45</text>
+        <text x="320" y="448" fill="#888" font-size="12">3,200</text>
+        <rect x="415" y="435" width="55" height="18" rx="3" fill="#27ae60" opacity="0.5"/>
+        <text x="425" y="448" fill="white" font-size="10">SOL</text>
+        <rect x="580" y="160" width="300" height="305" rx="8" fill="#1e1e3a" filter="url(#card-shadow)"/>
+        <text x="595" y="185" fill="white" font-size="14" font-weight="600">🗺️ Fire Map</text>
+        <rect x="595" y="195" width="270" height="255" rx="6" fill="#2a3d5c"/>
+        <path d="M620,250 L660,240 L700,245 L740,235 L780,255 L800,280 L810,320 L790,360 L760,390 L720,410 L680,420 L650,410 L630,380 L620,340 L615,300 Z" fill="#3d5a3d" opacity="0.4" stroke="#4a7a4a" stroke-width="1"/>
+        <circle cx="720" cy="385" r="12" fill="#e74c3c" opacity="0.7"/>
+        <circle cx="700" cy="375" r="8" fill="#e74c3c" opacity="0.6"/>
+        <circle cx="745" cy="370" r="9" fill="#e74c3c" opacity="0.6"/>
+        <circle cx="730" cy="395" r="5" fill="#ff7675" opacity="0.5"/>
+        <circle cx="680" cy="280" r="9" fill="#e74c3c" opacity="0.7"/>
+        <circle cx="670" cy="295" r="6" fill="#e74c3c" opacity="0.5"/>
+        <circle cx="690" cy="270" r="4" fill="#ff7675" opacity="0.5"/>
+        <polygon points="755,365 751,371 759,371" fill="#3498db"/>
+        <polygon points="660,270 656,276 664,276" fill="#3498db"/>
+        <text x="695" y="405" fill="#e74c3c" font-size="9" font-weight="600" opacity="0.9">Var</text>
+        <text x="660" y="265" fill="#e74c3c" font-size="9" font-weight="600" opacity="0.9">Fontainebleau</text>
+        <rect x="600" y="415" width="8" height="8" rx="4" fill="#e74c3c"/>
+        <text x="613" y="423" fill="#95a5a6" font-size="9">Fire</text>
+        <polygon points="648,415 644,423 652,423" fill="#3498db"/>
+        <text x="658" y="423" fill="#95a5a6" font-size="9">Aircraft</text>
+        <text x="700" y="460" fill="#555" font-size="9" text-anchor="middle">Last refresh: 2 sec ago</text>
+      </svg>
+    </div>
+    <div class="narrator">
+      <strong>Narrator:</strong> "Fabric ingests satellite detections every 10 minutes and automatically computes priorities. Toulon tops the list — score 2,490 with 215K people within 30 km!"
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 5 — Act 4: The Alert ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Act 4 — 2 min</div>
+      <h2>🚨 The Alert</h2>
+    </div>
+    <div style="max-width:820px;width:100%;">
+      <!-- Teams-style alert mockup -->
+      <div style="background:var(--cp-surface);border:1px solid var(--cp-border);border-radius:0.625rem;padding:24px;box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#6264A7;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;font-weight:700;">T</div>
+          <div>
+            <div style="font-weight:700;color:var(--cp-text)">Microsoft Teams — Fabric Activator</div>
+            <div style="font-size:0.8rem;color:var(--cp-text-muted)">just now</div>
+          </div>
+        </div>
+        <div style="background:var(--cp-surface-soft);border-left:4px solid var(--cp-danger);border-radius:0 0.625rem 0.625rem 0;padding:16px 20px;margin-bottom:16px;">
+          <div style="font-weight:700;color:var(--cp-danger);font-size:1.1rem;margin-bottom:8px;">🚨 WILDFIRE ALERT — HIGH PRIORITY</div>
+          <div style="font-size:0.9rem;color:var(--cp-text);line-height:1.6">
+            <strong>Zone:</strong> Toulon (Var) · <strong>FRP:</strong> 340 MW · <strong>Score:</strong> 2,490<br/>
+            <strong>Population at risk:</strong> 215,000 within 30 km<br/>
+            <strong>Recommendation:</strong> Deploy ground + aerial units immediately<br/>
+            <strong>Source:</strong> Fabric Activator · Rule: frp &gt; 50
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <span style="background:var(--cp-danger);color:white;padding:8px 20px;border-radius:0.625rem;font-size:0.85rem;font-weight:600;cursor:pointer;">🚒 Dispatch units</span>
+          <span style="background:var(--cp-link);color:white;padding:8px 20px;border-radius:0.625rem;font-size:0.85rem;font-weight:600;cursor:pointer;">🗺️ Open map</span>
+          <span style="background:var(--cp-surface);border:1px solid var(--cp-border);color:var(--cp-text);padding:8px 20px;border-radius:0.625rem;font-size:0.85rem;font-weight:600;cursor:pointer;">📊 View dashboard</span>
+        </div>
+      </div>
+    </div>
+    <div class="narrator" style="margin-top:20px">
+      <strong>Narrator:</strong> "When the score exceeds the threshold, Fabric fires a Teams alert instantly. The coordinator sees the zone, risk level, and recommended action — all in one notification."
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 6 — Act 5: The AI Agent ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Act 5 — 3 min</div>
+      <h2>🤖 The AI Agent</h2>
+    </div>
+    <div class="mockup-container">
+      <!-- AI Skill SVG embedded inline -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, Arial, sans-serif">
+        <defs>
+          <filter id="s" x="-3%" y="-3%" width="106%" height="112%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+          </filter>
+        </defs>
+        <rect width="900" height="400" fill="#fafaf8" rx="12"/>
+        <text x="450" y="35" text-anchor="middle" fill="#2c3e50" font-size="18" font-weight="bold">🤖 AI Skill — Natural Language Wildfire Queries</text>
+        <line x1="100" y1="48" x2="800" y2="48" stroke="#eee" stroke-width="1"/>
+        <rect x="60" y="65" width="780" height="310" rx="10" fill="white" stroke="#e0e0e0" stroke-width="1" filter="url(#s)"/>
+        <rect x="400" y="80" width="410" height="40" rx="16" fill="#0078d4"/>
+        <text x="420" y="105" fill="white" font-size="13">What is the highest priority fire zone right now?</text>
+        <rect x="85" y="130" width="520" height="85" rx="16" fill="#f0f0f0"/>
+        <text x="105" y="152" fill="#333" font-size="13" font-weight="600">🔥 Toulon is the top priority (score: 2,490)</text>
+        <text x="105" y="172" fill="#555" font-size="12">FRP: 340 MW · Population within 30 km: 215,000</text>
+        <text x="105" y="192" fill="#555" font-size="12">Recommendation: Deploy ground + aerial units (SOL + AÉRIEN)</text>
+        <text x="105" y="207" fill="#888" font-size="10">Source: DispatchResults · KQL Database EH_Wildfire</text>
+        <rect x="340" y="225" width="470" height="40" rx="16" fill="#0078d4"/>
+        <text x="360" y="250" fill="white" font-size="13">Which communes near Fontainebleau are threatened?</text>
+        <rect x="85" y="275" width="540" height="80" rx="16" fill="#f0f0f0"/>
+        <text x="105" y="297" fill="#333" font-size="13" font-weight="600">3 communes in the Fontainebleau area:</text>
+        <text x="105" y="317" fill="#555" font-size="12">1. Fontainebleau — priority 2,130 · FRP 280 · pop. 185K</text>
+        <text x="105" y="337" fill="#555" font-size="12">2. Nemours — priority 670 · FRP 150 · pop. 52K</text>
+        <text x="105" y="352" fill="#555" font-size="12">3. Melun — priority 345 · FRP 65 · pop. 28K</text>
+        <circle cx="80" cy="152" r="14" fill="#0078d4"/>
+        <text x="80" y="157" text-anchor="middle" fill="white" font-size="12" font-weight="bold">AI</text>
+        <circle cx="80" cy="302" r="14" fill="#0078d4"/>
+        <text x="80" y="307" text-anchor="middle" fill="white" font-size="12" font-weight="bold">AI</text>
+        <text x="450" y="390" text-anchor="middle" fill="#aaa" font-size="10">Powered by Microsoft Fabric AI Skill · KQL Database · Agent_Wildfire</text>
+      </svg>
+    </div>
+    <div class="narrator">
+      <strong>Narrator:</strong> "What if the crisis coordinator could simply ask questions in plain language? The AI Skill queries KQL in real-time and gives operational answers instantly."
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 7 — Activator Detail ══════════════ -->
+  <div class="slide slide-content">
+    <div class="act-header">
+      <div class="act-label">Deep Dive</div>
+      <h2>⚙️ How It Works Under the Hood</h2>
+    </div>
+    <div class="key-points" style="max-width:820px;">
+      <div class="key-point" style="max-width:380px;flex:1 1 300px">
+        <span class="emoji">🛰️</span>
+        <span class="label">1. Satellite Ingestion</span>
+        NASA FIRMS API → Fabric Eventstream every 10 min. Each detection = lat, lon, FRP (fire radiative power), confidence, satellite name.
+      </div>
+      <div class="key-point" style="max-width:380px;flex:1 1 300px">
+        <span class="emoji">📡</span>
+        <span class="label">2. KQL Processing</span>
+        Eventhouse clusters detections by proximity (geo_distance_2points), joins communes, computes <code style="font-family:Consolas,monospace;background:var(--cp-surface-soft);padding:2px 6px;border-radius:4px">priority_score = FRP × log(population)</code>.
+      </div>
+      <div class="key-point" style="max-width:380px;flex:1 1 300px">
+        <span class="emoji">🔔</span>
+        <span class="label">3. Activator Rule</span>
+        When <code style="font-family:Consolas,monospace;background:var(--cp-surface-soft);padding:2px 6px;border-radius:4px">frp &gt; 50</code>, Fabric triggers a Teams adaptive card with zone, score, and recommendation.
+      </div>
+      <div class="key-point" style="max-width:380px;flex:1 1 300px">
+        <span class="emoji">🤖</span>
+        <span class="label">4. AI Skill</span>
+        Agent_Wildfire uses DispatchResults as its data source. Natural language → KQL → structured answer with sources cited.
+      </div>
+    </div>
+    <div class="narrator" style="margin-top:16px">
+      <strong>Narrator:</strong> "The whole pipeline is event-driven. No polling, no batch jobs. Data flows from satellite to dispatch recommendation in under 60 seconds."
+    </div>
+  </div>
+
+  <!-- ══════════════ SLIDE 8 — Conclusion ══════════════ -->
+  <div class="slide slide-conclusion">
+    <h2>One Platform. One Workspace.</h2>
+    <div class="takeaway">
+      All of this on <strong>ONE platform</strong>: Microsoft Fabric.<br/>
+      Satellite data, real-time KQL, alerts, dashboards, AI — a single workspace for wildfire response.
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="icon">🛰️</span><div class="plabel">Ingest</div></div>
+      <div class="pillar"><span class="icon">🧠</span><div class="plabel">Model</div></div>
+      <div class="pillar"><span class="icon">📊</span><div class="plabel">Analyze</div></div>
+      <div class="pillar"><span class="icon">🔔</span><div class="plabel">Alert</div></div>
+      <div class="pillar"><span class="icon">🤖</span><div class="plabel">AI Agent</div></div>
+    </div>
+    <div style="margin-top:36px;font-size:0.9rem;color:var(--cp-text-soft)">
+      🔗 <a href="https://github.com/xavperret/fabric-wildfire-demo" style="color:var(--cp-link);text-decoration:none">github.com/xavperret/fabric-wildfire-demo</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation bar -->
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="go(-1)">← Prev</button>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-dots" id="dots"></div>
+    <span class="slide-counter" id="counter">1 / 9</span>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="go(1)">Next →</button>
+</nav>
+
+<script>
+const TOTAL = 9;
+let current = 0;
+
+function render() {
+  document.getElementById('slidesWrapper').style.transform = `translateX(-${current * 100}vw)`;
+  document.getElementById('progress').style.width = `${((current + 1) / TOTAL) * 100}%`;
+  document.getElementById('counter').textContent = `${current + 1} / ${TOTAL}`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === TOTAL - 1;
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'nav-dot' + (i === current ? ' active' : '');
+    d.onclick = () => { current = i; render(); };
+    dots.appendChild(d);
+  }
+}
+
+function go(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < TOTAL) { current = next; render(); }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  if (e.key === 'Home') { current = 0; render(); }
+  if (e.key === 'End') { current = TOTAL - 1; render(); }
+});
+
+document.getElementById('themeBtn').onclick = () => {
+  const curr = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', curr === 'dark' ? 'light' : 'dark');
+};
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 60) go(diff > 0 ? 1 : -1);
+});
+
+render();
+</script>
+</body>
+</html>
