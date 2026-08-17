@@ -1,0 +1,26 @@
+{
+  "name": "wildfire-command-center",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time operational command center for wildfire response — powered by Microsoft Fabric + Rayfin",
+  "scripts": {
+    "dev": "rayfin dev",
+    "build": "rayfin build",
+    "deploy": "rayfin deploy"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "leaflet": "^1.9.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^2.12.0"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.8",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "rayfin": "latest",
+    "typescript": "^5.5.0"
+  }
+}

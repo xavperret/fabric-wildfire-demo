@@ -1,0 +1,24 @@
+{
+  "name": "wildfire-sitrep",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Crisis Situation Report generator for wildfire response — powered by Microsoft Fabric + Rayfin",
+  "scripts": {
+    "dev": "rayfin dev",
+    "build": "rayfin build",
+    "deploy": "rayfin deploy"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.12.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "rayfin": "latest",
+    "typescript": "^5.5.0"
+  }
+}
